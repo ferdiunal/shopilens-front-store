@@ -5,20 +5,18 @@
  * Sepet işlemleri - Redux state + FakeStoreAPI entegrasyonu
  */
 
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import {
-    addItem,
-    removeItem,
-    updateQuantity,
     clearCart,
+    setCart,
     selectCartItems,
     selectCartTotal,
     selectCartItemCount,
 } from "@/lib/store/slices/cart.slice";
-import { CartService } from "@/lib/api/cart.service";
 import type { Product } from "@/types";
+import { CartService } from "@/lib/api/cart.service";
 
 const API_BASE = "https://fakestoreapi.com";
 
@@ -37,60 +35,28 @@ export function useCart() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    // User ID'yi session'dan al (base64 decode veya default 1)
-    const getUserId = useCallback((): number => {
-        if (session?.user?.id) {
-            const getSessionId = localStorage.getItem("userId." + session.user.id);
-            if (getSessionId) {
-                return parseInt(getSessionId);
-            }
-            const id = Math.floor(Math.random() * 7);
-            localStorage.setItem("userId." + session.user.id, id.toString());
-            return id;
-        }
-        return 1; // Demo için default user
-    }, [session?.user?.id]);
+    // Cookie API Yolu - Home uygulamasında rewrites üzerinden gider
+    const API_PATH = "/cart/api/cart";
 
-    /**
-     * FakeStoreAPI'ye sepet gönder
-     * API Format: { userId, products: [{ id, title, price, description, category, image }] }
-     */
-    const syncToAPI = useCallback(async (products: Product[]) => {
-        const userId = getUserId();
-
-        // FakeStoreAPI formatına dönüştür
-        const apiProducts = products.map((product) => ({
-            id: product.id,
-            title: product.title,
-            price: product.price,
-            description: product.description,
-            category: product.category,
-            image: product.image,
-        }));
-
+    const fetchCart = useCallback(async () => {
+        setIsLoading(true);
         try {
-            const response = await fetch(`${API_BASE}/carts`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    id: Math.floor(Math.random() * 7),
-                    userId,
-                    products: apiProducts,
-                }),
-            });
-
-            if (!response.ok) {
-                throw new Error(`API Error: ${response.status}`);
+            const response = await fetch(API_PATH);
+            const result = await response.json();
+            if (result.success) {
+                // Redux state'i API'den gelen verilerle senkronize et
+                dispatch(setCart(result.data));
             }
-
-            const data = await response.json();
-            console.log("Cart synced to FakeStoreAPI:", data);
-            return data;
         } catch (err) {
-            console.error("Cart sync error:", err);
-            throw err;
+            console.error("Cart fetch error:", err);
+        } finally {
+            setIsLoading(false);
         }
-    }, [getUserId]);
+    }, [dispatch]);
+
+    useEffect(() => {
+        fetchCart();
+    }, [fetchCart]);
 
     /**
      * Sepete ürün ekle
@@ -100,20 +66,25 @@ export function useCart() {
         setError(null);
 
         try {
-            // 1. Local Redux state'i güncelle
-            dispatch(addItem({ product, quantity }));
+            const response = await fetch(API_PATH, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ product, quantity }),
+            });
 
-            // 2. FakeStoreAPI'ye gönder (product objesini gönder)
-            await syncToAPI([product]);
-
-            return true;
+            const result = await response.json();
+            if (result.success) {
+                dispatch(setCart(result.data));
+                return true;
+            }
+            return false;
         } catch (err) {
             setError(err instanceof Error ? err.message : "Sepete eklenirken hata oluştu");
             return false;
         } finally {
             setIsLoading(false);
         }
-    }, [dispatch, syncToAPI]);
+    }, [dispatch]);
 
     /**
      * Sepetten ürün çıkar
@@ -123,13 +94,16 @@ export function useCart() {
         setError(null);
 
         try {
-            // Local Redux state'i güncelle
-            dispatch(removeItem(productId));
+            const response = await fetch(`${API_PATH}?productId=${productId}`, {
+                method: "DELETE",
+            });
 
-            // Not: FakeStoreAPI fake olduğundan delete işlemi simüle edilir
-            console.log("Product removed from cart:", productId);
-
-            return true;
+            const result = await response.json();
+            if (result.success) {
+                dispatch(setCart(result.data));
+                return true;
+            }
+            return false;
         } catch (err) {
             setError(err instanceof Error ? err.message : "Ürün çıkarılırken hata oluştu");
             return false;
@@ -146,24 +120,25 @@ export function useCart() {
         setError(null);
 
         try {
-            // Local Redux state'i güncelle
-            dispatch(updateQuantity({ productId, quantity }));
+            const response = await fetch(API_PATH, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ productId, quantity }),
+            });
 
-            // FakeStoreAPI'ye güncelleme gönder
-            // Not: updateItemQuantity için product bilgisi gerekli, mevcut cart items'tan alınabilir
-            const cartItem = items.find((item) => item.product.id === productId);
-            if (quantity > 0 && cartItem) {
-                await syncToAPI([cartItem.product]);
+            const result = await response.json();
+            if (result.success) {
+                dispatch(setCart(result.data));
+                return true;
             }
-
-            return true;
+            return false;
         } catch (err) {
             setError(err instanceof Error ? err.message : "Miktar güncellenirken hata oluştu");
             return false;
         } finally {
             setIsLoading(false);
         }
-    }, [dispatch, syncToAPI]);
+    }, [dispatch]);
 
     /**
      * Sepeti temizle
@@ -173,9 +148,16 @@ export function useCart() {
         setError(null);
 
         try {
-            dispatch(clearCart());
-            console.log("Cart cleared");
-            return true;
+            const response = await fetch(API_PATH, {
+                method: "DELETE",
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                dispatch(clearCart());
+                return true;
+            }
+            return false;
         } catch (err) {
             setError(err instanceof Error ? err.message : "Sepet temizlenirken hata oluştu");
             return false;
@@ -198,5 +180,6 @@ export function useCart() {
         removeFromCart,
         updateItemQuantity,
         emptyCart,
+        refresh: fetchCart
     };
 }

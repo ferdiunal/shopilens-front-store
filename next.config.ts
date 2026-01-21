@@ -75,6 +75,36 @@ const nextConfig: NextConfig = {
       fullUrl: true,
     },
   },
+
+  // Multi-zone Rewrites
+  async rewrites() {
+    return [
+      {
+        source: '/:lang/cart',
+        destination: 'http://localhost:3001/:lang/cart',
+      },
+      {
+        source: '/:lang/cart/api/:path*',
+        destination: 'http://localhost:3001/:lang/cart/api/:path*',
+      },
+      {
+        source: '/cart/api/:path*',
+        destination: 'http://localhost:3001/tr/cart/api/:path*',
+      },
+      {
+        // Sepet uygulamasının statik dosyaları (basePath olmadığı için direkt _next)
+        source: '/_next/static/:path*',
+        destination: 'http://localhost:3001/_next/static/:path*',
+        has: [
+          {
+            type: 'header',
+            key: 'referer',
+            value: '.*\/cart.*',
+          },
+        ],
+      },
+    ];
+  },
 };
 
 const createNextIntlPlugin = require('next-intl/plugin');

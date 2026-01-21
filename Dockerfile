@@ -1,62 +1,48 @@
-# ============================================
-# Multi-Stage Production Dockerfile
-# Next.js 16 + Standalone Output
-# ============================================
+FROM node:20-alpine AS base
 
-# Stage 1: Dependencies
-FROM node:20-alpine AS deps
+# Install dependencies only when needed
+FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Package dosyalarını kopyala
 COPY package.json package-lock.json* ./
+RUN npm ci
 
-# Dependencies yükle
-RUN npm ci --only=production
-
-# ============================================
-# Stage 2: Builder
-FROM node:20-alpine AS builder
+# Rebuild the source code only when needed
+FROM base AS builder
 WORKDIR /app
-
-# Dependencies'i kopyala
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Environment variables (build time)
-ENV NEXT_TELEMETRY_DISABLED=1
-ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED 1
 
-# Build
 RUN npm run build
 
-# ============================================
-# Stage 3: Runner (Production)
-FROM node:20-alpine AS runner
+# Production image, copy all the files and run next
+FROM base AS runner
 WORKDIR /app
 
-# Production environment
-ENV NODE_ENV=production
-ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV production
+ENV NEXT_TELEMETRY_DISABLED 1
 
-# Non-root user oluştur (güvenlik)
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Public assets
 COPY --from=builder /app/public ./public
 
-# Standalone output
+# Set the correct permission for prerender cache
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
+
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-# Non-root user'a geç
 USER nextjs
 
-# Port
 EXPOSE 3000
-ENV PORT=3000
-ENV HOSTNAME="0.0.0.0"
 
-# Start
+ENV PORT 3000
+
 CMD ["node", "server.js"]

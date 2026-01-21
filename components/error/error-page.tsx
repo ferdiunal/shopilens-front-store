@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Lock, RefreshCw, Home, AlertTriangle, Search } from "lucide-react";
@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
-type ErrorType = "403" | "404" | "500";
+export type ErrorType = "403" | "404" | "500";
 
 interface ErrorPageProps {
     type: ErrorType;
@@ -16,6 +16,7 @@ interface ErrorPageProps {
 }
 
 export function ErrorPage({ type, lang = "tr" }: ErrorPageProps) {
+    const locale = useLocale()
     const t = useTranslations("errors");
     const router = useRouter();
 

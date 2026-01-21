@@ -106,14 +106,14 @@ export default async function LanguageLayout({ children, params }: LanguageLayou
     const messages = await getMessages();
 
     return (
-        <StoreProvider>
-            <AuthProvider>
+        <AuthProvider>
+            <StoreProvider>
                 <NextIntlClientProvider messages={messages}>
                     <Header lang={lang} />
                     <main className="flex-grow">{children}</main>
                     <Footer lang={lang} />
                 </NextIntlClientProvider>
-            </AuthProvider>
-        </StoreProvider>
+            </StoreProvider>
+        </AuthProvider>
     );
 }

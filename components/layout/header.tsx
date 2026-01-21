@@ -21,10 +21,14 @@ interface HeaderProps {
     cartItemCount?: number;
 }
 
-export function Header({ lang, cartItemCount = 0 }: HeaderProps) {
+import { useAppSelector } from "@/lib/store/hooks";
+import { selectCartItemCount } from "@/lib/store/slices/cart.slice";
+
+export function Header({ lang }: HeaderProps) {
     const { theme, setTheme } = useTheme();
     const { status } = useSession();
     const t = useTranslations();
+    const cartItemCount = useAppSelector(selectCartItemCount);
 
     return (
         <header className="sticky top-0 z-50 w-full border-b border-border glass">
