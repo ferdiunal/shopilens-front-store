@@ -78,37 +78,24 @@ const nextConfig: NextConfig = {
   },
 
   // Multi-zone Rewrites
-  // async rewrites() {
-  //   const cartAppUrl = process.env.NEXT_PUBLIC_CART_APP_URL || process.env.CART_APP_URL || 'http://localhost:3001';
-  //   console.log(cartAppUrl);
+  async rewrites() {
+    const cartAppUrl = process.env.CART_APP_URL || 'http://localhost:3001';
 
-  //   return [
-  //     {
-  //       source: '/:lang/cart',
-  //       destination: `${cartAppUrl}/:lang/cart`,
-  //     },
-  //     {
-  //       source: '/:lang/cart/api/:path*',
-  //       destination: `${cartAppUrl}/:lang/cart/api/:path*`,
-  //     },
-  //     {
-  //       source: '/cart/api/:path*',
-  //       destination: `${cartAppUrl}/tr/cart/api/:path*`,
-  //     },
-  //     {
-  //       // Sepet uygulamasının statik dosyaları (basePath olmadığı için direkt _next)
-  //       source: '/_next/static/:path*',
-  //       destination: `${cartAppUrl}/_next/static/:path*`,
-  //       has: [
-  //         {
-  //           type: 'header',
-  //           key: 'referer',
-  //           value: '.*\/cart.*',
-  //         },
-  //       ],
-  //     },
-  //   ];
-  // },
+    return [
+      {
+        source: '/:lang/cart',
+        destination: `${cartAppUrl}/:lang/cart`,
+      },
+      {
+        source: '/:lang/cart/api/:path*',
+        destination: `${cartAppUrl}/:lang/cart/api/:path*`,
+      },
+      {
+        source: '/cart/api/:path*',
+        destination: `${cartAppUrl}/tr/cart/api/:path*`,
+      }
+    ];
+  },
 };
 
 const createNextIntlPlugin = require('next-intl/plugin');
