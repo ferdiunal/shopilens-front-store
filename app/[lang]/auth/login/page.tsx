@@ -1,55 +1,62 @@
-"use client";
+import { Metadata } from "next";
+import Link from "next/link";
+import { AuthLayout } from "@/components/auth/auth-layout";
+import { AuthHeader } from "@/components/auth/auth-header";
+import { LoginForm } from "@/components/auth/login-form";
+import { SocialButtons } from "@/components/auth/social-buttons";
+import { Separator } from "@/components/ui/separator";
 
-import { signIn } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { LogIn } from "lucide-react";
+export const metadata: Metadata = {
+    title: "Login - ShopiLens",
+    description: "Login to your account",
+};
 
-/**
- * Login Page
- * Auth0 ile giriş butonunu içerir
- */
 export default function LoginPage() {
-    const searchParams = useSearchParams();
-    const callbackUrl = searchParams.get("callbackUrl") || "/";
-
-    const handleLogin = () => {
-        signIn("auth0", { callbackUrl });
-    };
-
     return (
-        <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
-            <div className="w-full max-w-md space-y-8 text-center">
-                <div>
-                    <h2 className="mt-6 text-center text-3xl font-extrabold tracking-tight text-foreground">
-                        Hoş Geldiniz
-                    </h2>
-                    <p className="mt-2 text-center text-sm text-muted-foreground">
-                        ShopiLens hesabınıza giriş yapın
-                    </p>
-                </div>
+        <AuthLayout>
+            <AuthHeader
+                title="Welcome Back"
+                description="Enter your details to access your account."
+            />
 
-                <div className="mt-8 space-y-4">
-                    <Button
-                        size="lg"
-                        className="w-full h-12 text-lg font-medium"
-                        onClick={handleLogin}
+            {/* Tabs (Visual only for now matching design) */}
+            <div className="w-full">
+                <div className="flex border-b border-border gap-8">
+                    <button className="flex flex-col items-center justify-center border-b-[3px] border-b-primary pb-3 px-2 outline-none focus:outline-none transition-colors">
+                        <span className="text-sm font-bold leading-normal text-foreground">Sign In</span>
+                    </button>
+                    <Link
+                        href="/auth/register"
+                        className="flex flex-col items-center justify-center border-b-[3px] border-b-transparent pb-3 px-2 outline-none focus:outline-none transition-colors hover:text-foreground text-muted-foreground"
                     >
-                        <LogIn className="mr-2 h-5 w-5" />
-                        Auth0 ile Giriş Yap
-                    </Button>
-
-                    <p className="text-xs text-muted-foreground">
-                        Giriş yaparak kullanım koşullarımızı ve gizlilik politikamızı kabul etmiş olursunuz.
-                    </p>
+                        <span className="text-sm font-bold leading-normal">Create Account</span>
+                    </Link>
                 </div>
             </div>
 
-            {/* Arka plan süslemeleri */}
-            <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-                <div className="absolute top-[10%] left-[10%] w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
-                <div className="absolute bottom-[10%] right-[10%] w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+            <LoginForm />
+
+            {/* Divider */}
+            <div className="relative flex items-center py-2">
+                <div className="flex-grow border-t border-border"></div>
+                <span className="flex-shrink-0 mx-4 text-muted-foreground text-xs font-medium uppercase tracking-wider">
+                    Or continue with
+                </span>
+                <div className="flex-grow border-t border-border"></div>
             </div>
-        </div>
+
+            <SocialButtons />
+
+            {/* Footer Text */}
+            <p className="text-center text-sm text-muted-foreground mt-4">
+                Don&apos;t have an account?{" "}
+                <Link
+                    href="/auth/register"
+                    className="text-primary font-bold hover:underline"
+                >
+                    Sign up for free
+                </Link>
+            </p>
+        </AuthLayout>
     );
 }

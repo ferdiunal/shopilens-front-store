@@ -2,115 +2,101 @@
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
+import Link from "next/link";
+import { Eye, EyeOff } from "lucide-react";
 
 export function LoginForm() {
-    const router = useRouter();
-    const searchParams = useSearchParams();
-    const callbackUrl = searchParams.get("callbackUrl") || "/";
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    const [error, setError] = useState<string | null>(null);
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
         setIsLoading(true);
-        setError(null);
 
-        const formData = new FormData(e.currentTarget);
+        const formData = new FormData(event.currentTarget);
         const email = formData.get("email") as string;
         const password = formData.get("password") as string;
 
-        try {
-            const result = await signIn("credentials", {
-                email,
-                password,
-                redirect: false,
-                callbackUrl,
-            });
+        // Since auth.ts handles Auth0, we don't have direct credential login yet.
+        // We will trigger the Auth0 flow or a custom credential flow here.
+        // For this implementation, we'll direct to the main Auth0 login
+        // but passing login_hint if supported, or just the standard sign in.
+        // If the backend supported CredentialsProvider, we would use:
+        /*
+        const result = await signIn("credentials", {
+            email,
+            password,
+            redirect: false,
+        });
+        */
 
-            if (result?.error) {
-                setError("Invalid email or password");
-                setIsLoading(false);
-            } else {
-                router.push(callbackUrl);
-                router.refresh();
-            }
-        } catch (error) {
-            setError("An error occurred. Please try again.");
-            setIsLoading(false);
-        }
-    };
+        // Triggering standard sign-in for now as per plan
+        await signIn("auth0", {
+            callbackUrl: "/",
+            // passing email as a hint if possible, but standard next-auth doesn't easily expose this to Auth0
+            // without custom provider logic. We'll just initiate the flow.
+        });
+
+        // We don't set loading to false here because we redirect
+    }
 
     return (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-            {/* Header */}
-            <div>
-                <h1 className="text-3xl font-bold leading-tight tracking-tight text-foreground">
-                    Welcome Back
-                </h1>
-                <p className="mt-2 text-base text-muted-foreground">
-                    Enter your details to access your account.
-                </p>
-            </div>
-
-            {/* Error Message */}
-            {error && (
-                <div className="bg-destructive/10 text-destructive text-sm p-3 rounded-md">
-                    {error}
-                </div>
-            )}
-
+        <form onSubmit={onSubmit} className="flex flex-col gap-5">
             {/* Email Input */}
             <div className="flex flex-col gap-2">
-                <Label htmlFor="email" className="font-medium">
+                <Label htmlFor="email" className="text-sm font-medium">
                     Email Address
                 </Label>
-                <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="name@example.com"
-                    required
-                    className="h-12"
-                    disabled={isLoading}
-                    autoComplete="email"
-                />
+                <div className="relative">
+                    <Input
+                        id="email"
+                        name="email"
+                        placeholder="name@example.com"
+                        type="email"
+                        autoCapitalize="none"
+                        autoComplete="email"
+                        autoCorrect="off"
+                        disabled={isLoading}
+                        className="h-12 border-muted-foreground/20 focus-visible:ring-primary/50"
+                        required
+                    />
+                    <span className="absolute right-4 top-3 text-muted-foreground pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor"><path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280L160-640v400h640v-400L480-440Zm0-80 320-200H160l320 200ZM160-640v-80 480-400Z" /></svg>
+                    </span>
+                </div>
             </div>
 
             {/* Password Input */}
             <div className="flex flex-col gap-2">
                 <div className="flex justify-between items-center">
-                    <Label htmlFor="password" className="font-medium">
+                    <Label htmlFor="password" className="text-sm font-medium">
                         Password
                     </Label>
-                    <a
+                    <Link
                         href="/auth/forgot-password"
-                        className="text-xs font-semibold text-primary hover:underline"
+                        className="text-primary text-xs font-semibold hover:underline"
                     >
                         Forgot Password?
-                    </a>
+                    </Link>
                 </div>
                 <div className="relative">
                     <Input
                         id="password"
                         name="password"
-                        type={showPassword ? "text" : "password"}
                         placeholder="Enter your password"
-                        required
-                        className="h-12 pr-10"
-                        disabled={isLoading}
+                        type={showPassword ? "text" : "password"}
                         autoComplete="current-password"
+                        disabled={isLoading}
+                        className="h-12 border-muted-foreground/20 focus-visible:ring-primary/50 pr-12"
+                        required
                     />
                     <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-3 text-muted-foreground hover:text-foreground transition-colors"
-                        disabled={isLoading}
+                        className="absolute right-4 top-3 text-muted-foreground hover:text-primary transition-colors cursor-pointer"
                     >
                         {showPassword ? (
                             <EyeOff className="size-5" />
@@ -124,17 +110,10 @@ export function LoginForm() {
             {/* Submit Button */}
             <Button
                 type="submit"
-                className="h-12 mt-2 w-full text-base font-bold shadow-lg shadow-primary/20"
+                className="mt-2 w-full h-12 text-sm font-bold shadow-lg shadow-primary/20"
                 disabled={isLoading}
             >
-                {isLoading ? (
-                    <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Signing in...
-                    </>
-                ) : (
-                    "Sign In"
-                )}
+                {isLoading ? "Signing in..." : "Sign In"}
             </Button>
         </form>
     );

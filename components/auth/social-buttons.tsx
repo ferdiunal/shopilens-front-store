@@ -3,13 +3,13 @@
 import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 
-export function SocialButtons() {
-    const handleGoogleLogin = () => {
-        signIn("google", { callbackUrl: "/" });
-    };
+interface SocialButtonsProps {
+    isLoading?: boolean;
+}
 
-    const handleAppleLogin = () => {
-        signIn("apple", { callbackUrl: "/" });
+export function SocialButtons({ isLoading }: SocialButtonsProps) {
+    const handleSocialLogin = (provider: string) => {
+        signIn(provider, { callbackUrl: "/" });
     };
 
     return (
@@ -17,20 +17,28 @@ export function SocialButtons() {
             <Button
                 variant="outline"
                 className="h-12 w-full"
-                onClick={handleGoogleLogin}
+                onClick={() => handleSocialLogin("google")}
+                disabled={isLoading}
             >
-                <svg className="mr-2 h-4 w-4" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
-                    <path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path>
+                <svg className="mr-2 h-5 w-5" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .533 5.333.533 12S5.867 24 12.48 24c3.44 0 6.013-1.133 8.053-3.267 2.08-2.08 2.76-5.174 2.76-7.667 0-.76-.067-1.48-.187-2.146h-10.61v.001z"
+                        fill="currentColor"
+                    />
                 </svg>
                 Google
             </Button>
             <Button
                 variant="outline"
                 className="h-12 w-full"
-                onClick={handleAppleLogin}
+                onClick={() => handleSocialLogin("apple")}
+                disabled={isLoading}
             >
-                <svg className="mr-2 h-4 w-4" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="apple" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-                    <path fill="currentColor" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path>
+                <svg className="mr-2 h-5 w-5" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.14.47-2.1.6-3.08-.35-1.54-1.54-2.1-4.14-.54-6.4 1.23-1.77 3.32-2.31 4.57-1.8 1.16.48 1.91.48 3.03 0 1.29-.53 3.09.07 4.1 1.6-3.82 2.08-3.15 7.15 1.14 8.7-.35 1.12-1.07 2.33-2.9 4.1zM12.03 7.25c-.25-2.19 1.62-4.04 3.7-4.25.32 2.39-2.25 4.34-3.7 4.25z"
+                        fill="currentColor"
+                    />
                 </svg>
                 Apple
             </Button>
