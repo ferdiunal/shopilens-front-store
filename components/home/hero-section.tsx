@@ -29,7 +29,7 @@ export async function HeroSection({ lang }: { lang: string }) {
                 <Link href={`/${lang}/products`}>
                     <Button
                         size="xl"
-                        className="mt-4 bg-white text-foreground hover:bg-primary hover:text-white transition-all duration-300 shadow-lg"
+                        className="mt-4 bg-white text-foreground hover:bg-primary dark:text-primary hover:text-white transition-all duration-300 shadow-lg"
                     >
                         {t('common.shopNow')}
                     </Button>

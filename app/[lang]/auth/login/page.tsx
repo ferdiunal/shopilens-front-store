@@ -1,10 +1,9 @@
 import { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { AuthLayout } from "@/components/auth/auth-layout";
 import { AuthHeader } from "@/components/auth/auth-header";
 import { LoginForm } from "@/components/auth/login-form";
 import { SocialButtons } from "@/components/auth/social-buttons";
-import { Separator } from "@/components/ui/separator";
-import { useLocale } from "next-intl";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -12,30 +11,30 @@ export const metadata: Metadata = {
     description: "Login to your account",
 };
 
-export default function LoginPage() {
-    const locale = useLocale();
+export default async function LoginPage({ params }: { params: Promise<{ lang: string }> }) {
+    const { lang: locale } = await params;
+    const t = await getTranslations("auth");
+
     return (
         <AuthLayout>
             <AuthHeader
-                title="Welcome Back"
-                description="Enter your details to access your account."
+                title={t("welcomeBack")}
+                description={t("enterDetailsToAccess")}
             />
 
-            {/* Tabs (Visual only for now matching design) */}
+            {/* Tabs */}
             <div className="w-full">
                 <div className="flex border-b border-border gap-8">
                     <Link
                         href={`/${locale}/auth/login`}
-                        locale={locale}
-                        className="flex flex-col items-center justify-center border-b-[3px] border-b-[var(--primary)] pb-3 px-2 outline-none focus:outline-none transition-colors">
-                        <span className="text-sm font-bold leading-normal text-foreground">Sign In</span>
+                        className="flex flex-col items-center justify-center border-b-[3px] border-b-primary pb-3 px-2 outline-none focus:outline-none transition-colors">
+                        <span className="text-sm font-bold leading-normal text-foreground">{t("signIn")}</span>
                     </Link>
                     <Link
                         href={`/${locale}/auth/register`}
-                        locale={locale}
                         className="flex flex-col items-center justify-center border-b-[3px] border-b-transparent pb-3 px-2 outline-none focus:outline-none transition-colors hover:text-foreground text-muted-foreground"
                     >
-                        <span className="text-sm font-bold leading-normal">Create Account</span>
+                        <span className="text-sm font-bold leading-normal">{t("createAccount")}</span>
                     </Link>
                 </div>
             </div>
@@ -46,7 +45,7 @@ export default function LoginPage() {
             <div className="relative flex items-center py-2">
                 <div className="flex-grow border-t border-border"></div>
                 <span className="flex-shrink-0 mx-4 text-muted-foreground text-xs font-medium uppercase tracking-wider">
-                    Or continue with
+                    {t("orContinueWith")}
                 </span>
                 <div className="flex-grow border-t border-border"></div>
             </div>
@@ -55,13 +54,12 @@ export default function LoginPage() {
 
             {/* Footer Text */}
             <p className="text-center text-sm text-muted-foreground mt-4">
-                Don&apos;t have an account?{" "}
+                {t("noAccount")}{" "}
                 <Link
                     href={`/${locale}/auth/register`}
-                    locale={locale}
                     className="text-primary font-bold hover:underline"
                 >
-                    Sign up for free
+                    {t("signUpFree")}
                 </Link>
             </p>
         </AuthLayout>

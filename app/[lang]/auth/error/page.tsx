@@ -1,6 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { AlertCircle, ArrowLeft } from "lucide-react";
@@ -11,6 +12,7 @@ import { AlertCircle, ArrowLeft } from "lucide-react";
 export default function AuthErrorPage() {
     const searchParams = useSearchParams();
     const error = searchParams.get("error");
+    const t = useTranslations("auth");
 
     return (
         <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
@@ -21,24 +23,24 @@ export default function AuthErrorPage() {
 
                 <div>
                     <h2 className="text-3xl font-extrabold tracking-tight text-foreground">
-                        Bir Hata Oluştu
+                        {t("errorOccurred")}
                     </h2>
                     <p className="mt-2 text-sm text-muted-foreground uppercase tracking-widest">
-                        {error || "Kimlik doğrulama başarısız oldu"}
+                        {error || t("authenticationFailed")}
                     </p>
                 </div>
 
                 <div className="mt-8 space-y-4">
                     <Button asChild variant="outline" className="w-full">
                         <Link href="/auth/login">
-                            Tekrar Dene
+                            {t("tryAgain")}
                         </Link>
                     </Button>
 
                     <Button asChild variant="ghost" className="w-full">
                         <Link href="/" className="inline-flex items-center">
                             <ArrowLeft className="mr-2 h-4 w-4" />
-                            Ana Sayfaya Dön
+                            {t("backToHome")}
                         </Link>
                     </Button>
                 </div>

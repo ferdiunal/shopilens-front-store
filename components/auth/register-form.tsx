@@ -1,28 +1,65 @@
 "use client";
 
 import { useState } from "react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 
 export function RegisterForm() {
+    const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const t = useTranslations("auth");
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setIsLoading(true);
         setError(null);
 
-        // Simulate API call
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        const formData = new FormData(e.currentTarget);
+        const name = formData.get("name") as string;
+        const email = formData.get("email") as string;
+        const password = formData.get("password") as string;
 
-        // Mock success/error
-        // For now, we'll just show an error as API is not ready
-        setError("Registration is momentarily unavailable. Please try again later.");
-        setIsLoading(false);
+        try {
+            // 1. Kendi API'mize kayıt isteği gönder (Auth0 SDK kullanıyor)
+            const response = await fetch("/api/auth/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, email, password }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || t("registrationFailed"));
+            }
+
+            // 2. Kayıt başarılı, şimdi NextAuth ile oturum aç
+            const result = await signIn("credentials", {
+                email,
+                password,
+                redirect: false,
+            });
+
+            if (result?.error) {
+                setError(t("registrationSuccessLoginFailed"));
+                setIsLoading(false);
+                return;
+            }
+
+            router.push("/");
+            router.refresh();
+        } catch (err: any) {
+            setError(err.message || t("somethingWentWrong"));
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -30,10 +67,10 @@ export function RegisterForm() {
             {/* Header */}
             <div>
                 <h1 className="text-3xl font-bold leading-tight tracking-tight text-foreground">
-                    Create Account
+                    {t("createAccount")}
                 </h1>
                 <p className="mt-2 text-base text-muted-foreground">
-                    Sign up to get started and unlock exclusive features.
+                    {t("signUpDescription")}
                 </p>
             </div>
 
@@ -47,13 +84,13 @@ export function RegisterForm() {
             {/* Full Name */}
             <div className="flex flex-col gap-2">
                 <Label htmlFor="name" className="font-medium">
-                    Full Name
+                    {t("fullName")}
                 </Label>
                 <Input
                     id="name"
                     name="name"
                     type="text"
-                    placeholder="John Doe"
+                    placeholder={t("fullNamePlaceholder")}
                     required
                     className="h-12"
                     disabled={isLoading}
@@ -64,13 +101,13 @@ export function RegisterForm() {
             {/* Email Input */}
             <div className="flex flex-col gap-2">
                 <Label htmlFor="email" className="font-medium">
-                    Email Address
+                    {t("emailAddress")}
                 </Label>
                 <Input
                     id="email"
                     name="email"
                     type="email"
-                    placeholder="name@example.com"
+                    placeholder={t("emailPlaceholder")}
                     required
                     className="h-12"
                     disabled={isLoading}
@@ -81,14 +118,14 @@ export function RegisterForm() {
             {/* Password Input */}
             <div className="flex flex-col gap-2">
                 <Label htmlFor="password" className="font-medium">
-                    Password
+                    {t("password")}
                 </Label>
                 <div className="relative">
                     <Input
                         id="password"
                         name="password"
                         type={showPassword ? "text" : "password"}
-                        placeholder="Create a password"
+                        placeholder={t("passwordPlaceholder")}
                         required
                         className="h-12 pr-10"
                         disabled={isLoading}
@@ -118,10 +155,10 @@ export function RegisterForm() {
                 {isLoading ? (
                     <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Creating Account...
+                        {t("creatingAccount")}
                     </>
                 ) : (
-                    "Create Account"
+                    t("createAccount")
                 )}
             </Button>
         </form>
