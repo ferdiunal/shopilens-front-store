@@ -51,7 +51,15 @@
         "productsTitle": "Products",
         "productsDescription": "Explore our wide range of products",
         "cartTitle": "Shopping Cart",
-        "cartDescription": "View items in your cart"
+        "cartDescription": "View items in your cart",
+        "organization": {
+            "name": "ShopiLens",
+            "contactType": "Customer Service"
+        },
+        "website": {
+            "name": "ShopiLens",
+            "description": "Discover the best products."
+        }
     },
     "categories": {
         "all": "All",

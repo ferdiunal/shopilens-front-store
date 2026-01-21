@@ -4,16 +4,18 @@
  */
 
 import type { Product } from "@/types";
+import { getTranslations } from "next-intl/server";
 
 /**
  * Organization JSON-LD
  * Site geneli organization bilgisi
  */
-export function OrganizationJsonLd() {
+export async function OrganizationJsonLd() {
+    const t = await getTranslations("meta.organization");
     const organization = {
         "@context": "https://schema.org",
         "@type": "Organization",
-        name: "ShopiLens",
+        name: t("name"),
         url: process.env.NEXT_PUBLIC_APP_URL || "https://shopilens.com",
         logo: `${process.env.NEXT_PUBLIC_APP_URL || ""}/logo.png`,
         sameAs: [
@@ -24,7 +26,7 @@ export function OrganizationJsonLd() {
         contactPoint: {
             "@type": "ContactPoint",
             telephone: "+90-555-555-5555",
-            contactType: "customer service",
+            contactType: t("contactType"),
             availableLanguage: ["Turkish", "English"],
         },
     };
@@ -41,11 +43,13 @@ export function OrganizationJsonLd() {
  * WebSite JSON-LD
  * Site geneli arama özelliği
  */
-export function WebSiteJsonLd() {
+export async function WebSiteJsonLd() {
+    const t = await getTranslations("meta.website");
     const website = {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        name: "ShopiLens",
+        name: t("name"),
+        description: t("description"),
         url: process.env.NEXT_PUBLIC_APP_URL || "https://shopilens.com",
         potentialAction: {
             "@type": "SearchAction",

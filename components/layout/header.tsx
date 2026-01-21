@@ -7,11 +7,14 @@
 
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import { Search, ShoppingBag, User, Sun, Moon, Menu } from "lucide-react";
+import { Search, ShoppingBag, User, Sun, Moon, Menu, LogOut } from "lucide-react";
+import { useSession, signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
+import { LanguageSwitcher } from "@/components/layout/language-switcher";
 
 interface HeaderProps {
     lang: string;
@@ -20,6 +23,7 @@ interface HeaderProps {
 
 export function Header({ lang, cartItemCount = 0 }: HeaderProps) {
     const { theme, setTheme } = useTheme();
+    const { status } = useSession();
     const t = useTranslations();
 
     return (
@@ -91,6 +95,9 @@ export function Header({ lang, cartItemCount = 0 }: HeaderProps) {
                             <Search className="size-5" />
                         </Button>
 
+                        {/* Language Switcher */}
+                        <LanguageSwitcher currentLang={lang} />
+
                         {/* Theme Toggle */}
                         <Button
                             variant="ghost"
@@ -115,15 +122,34 @@ export function Header({ lang, cartItemCount = 0 }: HeaderProps) {
                             </Button>
                         </Link>
 
-                        {/* User */}
-                        <Button variant="ghost" size="icon" className="hidden sm:flex">
-                            <User className="size-5" />
-                        </Button>
-
-                        {/* Login (Desktop) */}
-                        <Button className="hidden lg:flex" size="sm">
-                            {t('auth.login')}
-                        </Button>
+                        {/* Auth Actions */}
+                        {status === "authenticated" ? (
+                            <div className="hidden sm:flex items-center gap-2">
+                                <Link href={`/${lang}/profile`}>
+                                    <Button variant="ghost" size="icon" title="Profile">
+                                        <User className="size-5" />
+                                    </Button>
+                                </Link>
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    onClick={() => signOut()}
+                                    title="Logout"
+                                >
+                                    <LogOut className="size-5" />
+                                </Button>
+                            </div>
+                        ) : (
+                            <div className="hidden lg:flex items-center gap-2">
+                                {status !== "loading" && (
+                                    <Link href={`/${lang}/auth/login`}>
+                                        <Button size="sm">
+                                            {t('auth.login')}
+                                        </Button>
+                                    </Link>
+                                )}
+                            </div>
+                        )}
 
                         {/* Mobile Menu */}
                         <Button variant="ghost" size="icon" className="md:hidden">

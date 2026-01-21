@@ -51,7 +51,15 @@
         "productsTitle": "Ürünler",
         "productsDescription": "Geniş ürün yelpazemizi keşfedin",
         "cartTitle": "Alışveriş Sepeti",
-        "cartDescription": "Sepetinizdeki ürünleri görüntüleyin"
+        "cartDescription": "Sepetinizdeki ürünleri görüntüleyin",
+        "organization": {
+            "name": "ShopiLens",
+            "contactType": "Müşteri Hizmetleri"
+        },
+        "website": {
+            "name": "ShopiLens",
+            "description": "En iyi ürünleri keşfedin."
+        }
     },
     "categories": {
         "all": "Tümü",
