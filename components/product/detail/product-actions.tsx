@@ -6,7 +6,7 @@
  */
 
 import { useState } from "react";
-import { ShoppingBag } from "lucide-react";
+import { ShoppingBag, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { QuantityInput } from "@/components/product/quantity-input";
 import { cn } from "@/lib/utils";
@@ -16,6 +16,7 @@ interface ProductActionsProps {
     product: Product;
     addToCartLabel: string;
     onAddToCart?: (product: Product, quantity: number) => void;
+    isLoading?: boolean;
     className?: string;
 }
 
@@ -23,6 +24,7 @@ export function ProductActions({
     product,
     addToCartLabel,
     onAddToCart,
+    isLoading = false,
     className,
 }: ProductActionsProps) {
     const [quantity, setQuantity] = useState(1);
@@ -42,11 +44,17 @@ export function ProductActions({
             <Button
                 size="lg"
                 onClick={handleAddToCart}
+                disabled={isLoading}
                 className="flex-1 h-12 gap-2 group shadow-lg shadow-primary/20"
             >
-                <ShoppingBag className="size-5 group-hover:animate-bounce" />
+                {isLoading ? (
+                    <Loader2 className="size-5 animate-spin" />
+                ) : (
+                    <ShoppingBag className="size-5 group-hover:animate-bounce" />
+                )}
                 {addToCartLabel}
             </Button>
         </div>
     );
 }
+

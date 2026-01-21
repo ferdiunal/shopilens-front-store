@@ -30,6 +30,7 @@
     "cart": {
         "title": "Shopping Cart",
         "empty": "Your cart is empty",
+        "emptyDescription": "Looks like you haven't added any items to your cart yet. Start shopping to fill it up!",
         "subtotal": "Subtotal",
         "total": "Total",
         "checkout": "Checkout",
@@ -37,7 +38,15 @@
         "clearCart": "Clear Cart",
         "itemAdded": "Item added to cart",
         "itemRemoved": "Item removed from cart",
-        "quantity": "Quantity"
+        "quantity": "Quantity",
+        "remove": "Remove",
+        "orderSummary": "Order Summary",
+        "items": "Items",
+        "shipping": "Shipping",
+        "freeShipping": "Free",
+        "secureCheckout": "🔒 Secure checkout powered by SSL",
+        "syncError": "Failed to sync cart. Please try again.",
+        "loading": "Loading cart..."
     },
     "nav": {
         "home": "Home",
@@ -110,5 +119,76 @@
         "size": "Size",
         "apply": "Apply",
         "clear": "Clear"
+    },
+    "profile": {
+        "title": "Profile Settings",
+        "description": "Manage your personal information and account preferences.",
+        "viewPublicProfile": "View Public Profile",
+        "sidebar": {
+            "premiumMember": "Premium Member",
+            "profile": "Profile",
+            "orders": "Orders",
+            "addresses": "Addresses",
+            "paymentMethods": "Payment Methods",
+            "settings": "Settings",
+            "signOut": "Sign Out"
+        },
+        "avatar": {
+            "title": "Profile Picture",
+            "description": "PNG, JPG or GIF up to 2MB",
+            "uploadNew": "Upload New",
+            "delete": "Delete"
+        },
+        "form": {
+            "firstName": "First Name",
+            "lastName": "Last Name",
+            "emailAddress": "Email Address",
+            "verify": "Verify",
+            "phoneNumber": "Phone Number",
+            "dateOfBirth": "Date of Birth"
+        },
+        "security": {
+            "title": "Password & Security",
+            "description": "Manage your password and 2FA settings.",
+            "updatePassword": "Update Password",
+            "password": "Password",
+            "lastChanged": "Last changed {time} ago"
+        },
+        "deleteAccount": {
+            "title": "Delete Account",
+            "description": "Once you delete your account, there is no going back. Please be certain.",
+            "button": "Delete Account"
+        },
+        "actions": {
+            "cancel": "Cancel",
+            "saveChanges": "Save Changes"
+        }
+    },
+    "errors": {
+        "goBack": "Go Back",
+        "returnHome": "Return to Home",
+        "contactSupport": "Need help? Contact Support",
+        "searchProducts": "Search for products...",
+        "newArrivals": "New Arrivals",
+        "bestSellers": "Best Sellers",
+        "helpCenter": "Help Center",
+        "refreshPage": "Refresh Page",
+        "403": {
+            "title": "403",
+            "heading": "Access Denied",
+            "description": "You don't have permission to access this area. This page is restricted to authorized personnel only.",
+            "restricted": "RESTRICTED"
+        },
+        "404": {
+            "title": "404",
+            "heading": "Page Not Found",
+            "description": "The page you are looking for has moved or does not exist. Try searching for a product or return to the homepage."
+        },
+        "500": {
+            "title": "500",
+            "heading": "Internal Server Error",
+            "description": "Something went wrong on our end. We are working to fix it. Please try refreshing the page or come back later.",
+            "systemMalfunction": "SYSTEM MALFUNCTION"
+        }
     }
 }

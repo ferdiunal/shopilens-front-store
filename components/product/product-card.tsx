@@ -3,15 +3,15 @@
 /**
  * Product Card Component
  * Hover efektli ürün kartı, badge desteği, quick-add button
+ * FakeStoreAPI entegrasyonu ile sepete ekleme
  */
 
 import Image from "next/image";
 import Link from "next/link";
-import { ShoppingCart, Heart } from "lucide-react";
+import { ShoppingCart, Heart, Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useAppDispatch } from "@/lib/store/hooks";
-import { addItem } from "@/lib/store/slices/cart.slice";
+import { useCart } from "@/lib/hooks/use-cart";
 import { cn, formatPrice } from "@/lib/utils";
 import type { Product } from "@/types";
 
@@ -30,7 +30,7 @@ export function ProductCard({
     showQuickAdd = true,
     addToCartLabel = "Add to Cart",
 }: ProductCardProps) {
-    const dispatch = useAppDispatch();
+    const { addToCart, isLoading } = useCart();
 
     // Badge belirleme
     const getBadge = () => {
@@ -39,14 +39,11 @@ export function ProductCard({
         return null;
     };
 
-    const handleAddToCart = (e: React.MouseEvent) => {
+    const handleAddToCart = async (e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
 
-        dispatch(addItem({
-            product,
-            quantity: 1
-        }));
+        await addToCart(product, 1);
     };
 
     const badge = getBadge();
@@ -86,8 +83,13 @@ export function ProductCard({
                             variant="secondary"
                             className="w-full bg-background shadow-lg"
                             onClick={handleAddToCart}
+                            disabled={isLoading}
                         >
-                            <ShoppingCart className="size-4" />
+                            {isLoading ? (
+                                <Loader2 className="size-4 animate-spin" />
+                            ) : (
+                                <ShoppingCart className="size-4" />
+                            )}
                             {addToCartLabel}
                         </Button>
                     </div>

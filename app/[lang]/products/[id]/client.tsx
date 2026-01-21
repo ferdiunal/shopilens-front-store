@@ -3,6 +3,7 @@
 /**
  * ProductDetailClient Component
  * Interaktif öğeler: Color, Size, Actions
+ * FakeStoreAPI entegrasyonu ile sepete ekleme
  */
 
 import { useState } from "react";
@@ -13,8 +14,7 @@ import {
     type ColorOption,
     type SizeOption,
 } from "@/components/product/detail";
-import { useAppDispatch } from "@/lib/store/hooks";
-import { addItem } from "@/lib/store/slices/cart.slice";
+import { useCart } from "@/lib/hooks/use-cart";
 import type { Product } from "@/types";
 
 interface ProductDetailClientProps {
@@ -45,11 +45,10 @@ export function ProductDetailClient({
 }: ProductDetailClientProps) {
     const [selectedColor, setSelectedColor] = useState(defaultColors[0].id);
     const [selectedSize, setSelectedSize] = useState<string | null>("m");
-    const dispatch = useAppDispatch();
+    const { addToCart, isLoading } = useCart();
 
-
-    const handleAddToCart = (product: Product, quantity: number) => {
-        dispatch(addItem({ product, quantity }));
+    const handleAddToCart = async (product: Product, quantity: number) => {
+        await addToCart(product, quantity);
     };
 
     const handleSizeGuideClick = () => {
@@ -79,6 +78,7 @@ export function ProductDetailClient({
                 product={product}
                 addToCartLabel={addToCartLabel}
                 onAddToCart={handleAddToCart}
+                isLoading={isLoading}
                 className="pt-4"
             />
         </div>

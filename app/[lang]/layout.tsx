@@ -13,6 +13,7 @@ import { AuthProvider } from "@/components/providers/session-provider";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import type { Metadata, Viewport } from "next";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 
 interface LanguageLayoutProps {
     children: React.ReactNode;

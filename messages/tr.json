@@ -30,6 +30,7 @@
     "cart": {
         "title": "Alışveriş Sepeti",
         "empty": "Sepetiniz boş",
+        "emptyDescription": "Görünüşe göre henüz sepetinize ürün eklememişsiniz. Alışverişe başlayın!",
         "subtotal": "Ara Toplam",
         "total": "Toplam",
         "checkout": "Ödemeye Geç",
@@ -37,7 +38,15 @@
         "clearCart": "Sepeti Temizle",
         "itemAdded": "Ürün sepete eklendi",
         "itemRemoved": "Ürün sepetten çıkarıldı",
-        "quantity": "Adet"
+        "quantity": "Adet",
+        "remove": "Kaldır",
+        "orderSummary": "Sipariş Özeti",
+        "items": "Ürünler",
+        "shipping": "Kargo",
+        "freeShipping": "Ücretsiz",
+        "secureCheckout": "🔒 SSL ile güvenli ödeme",
+        "syncError": "Sepet senkronizasyonu başarısız. Lütfen tekrar deneyin.",
+        "loading": "Sepet yükleniyor..."
     },
     "nav": {
         "home": "Ana Sayfa",
@@ -110,5 +119,76 @@
         "size": "Beden",
         "apply": "Uygula",
         "clear": "Temizle"
+    },
+    "profile": {
+        "title": "Profil Ayarları",
+        "description": "Kişisel bilgilerinizi ve hesap tercihlerinizi yönetin.",
+        "viewPublicProfile": "Herkese Açık Profili Görüntüle",
+        "sidebar": {
+            "premiumMember": "Premium Üye",
+            "profile": "Profil",
+            "orders": "Siparişler",
+            "addresses": "Adresler",
+            "paymentMethods": "Ödeme Yöntemleri",
+            "settings": "Ayarlar",
+            "signOut": "Çıkış Yap"
+        },
+        "avatar": {
+            "title": "Profil Fotoğrafı",
+            "description": "PNG, JPG veya GIF. Maksimum 2MB",
+            "uploadNew": "Yeni Yükle",
+            "delete": "Sil"
+        },
+        "form": {
+            "firstName": "Ad",
+            "lastName": "Soyad",
+            "emailAddress": "E-posta Adresi",
+            "verify": "Doğrula",
+            "phoneNumber": "Telefon Numarası",
+            "dateOfBirth": "Doğum Tarihi"
+        },
+        "security": {
+            "title": "Şifre ve Güvenlik",
+            "description": "Şifrenizi ve 2FA ayarlarınızı yönetin.",
+            "updatePassword": "Şifreyi Güncelle",
+            "password": "Şifre",
+            "lastChanged": "{time} önce değiştirildi"
+        },
+        "deleteAccount": {
+            "title": "Hesabı Sil",
+            "description": "Hesabınızı sildiğinizde geri dönüş yoktur. Lütfen emin olun.",
+            "button": "Hesabı Sil"
+        },
+        "actions": {
+            "cancel": "İptal",
+            "saveChanges": "Değişiklikleri Kaydet"
+        }
+    },
+    "errors": {
+        "goBack": "Geri Dön",
+        "returnHome": "Ana Sayfaya Dön",
+        "contactSupport": "Yardım mı lazım? Destek ile iletişime geçin",
+        "searchProducts": "Ürün ara...",
+        "newArrivals": "Yeni Gelenler",
+        "bestSellers": "En Çok Satanlar",
+        "helpCenter": "Yardım Merkezi",
+        "refreshPage": "Sayfayı Yenile",
+        "403": {
+            "title": "403",
+            "heading": "Erişim Engellendi",
+            "description": "Bu alana erişim izniniz yok. Bu sayfa yalnızca yetkili kullanıcılar için.",
+            "restricted": "KISITLI"
+        },
+        "404": {
+            "title": "404",
+            "heading": "Sayfa Bulunamadı",
+            "description": "Aradığınız sayfa taşınmış veya mevcut değil. Bir ürün aramayı deneyin veya ana sayfaya dönün."
+        },
+        "500": {
+            "title": "500",
+            "heading": "Sunucu Hatası",
+            "description": "Bir şeyler ters gitti. Sorunu çözmek için çalışıyoruz. Lütfen sayfayı yenileyin veya daha sonra tekrar deneyin.",
+            "systemMalfunction": "SİSTEM HATASI"
+        }
     }
 }

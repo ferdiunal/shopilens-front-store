@@ -7,7 +7,7 @@ const locales = ['en', 'tr'];
 const defaultLocale = 'tr';
 
 // Korumalı rotalar
-const protectedRoutes = ["/checkout", "/account", "/orders"];
+const protectedRoutes = ["/checkout", "/profile", "/orders"];
 
 // Auth rotaları (giriş yapmış kullanıcı erişemez)
 const authRoutes = ["/auth/login", "/auth/register"];
