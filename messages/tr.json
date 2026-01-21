@@ -1,0 +1,194 @@
+{
+    "common": {
+        "loading": "Yükleniyor...",
+        "error": "Bir hata oluştu",
+        "search": "Ürün ara...",
+        "price": "Fiyat",
+        "currency": "$",
+        "addToCart": "Sepete Ekle",
+        "viewDetails": "Detayları Gör",
+        "shopNow": "Alışverişe Başla",
+        "viewAll": "Tümünü Gör",
+        "newsletter": "Bültenimize Katılın",
+        "newsletterDescription": "Yeni ürünler ve özel fırsatlar için kaydolun ve ilk siparişinizde %15 indirim kazanın.",
+        "enterEmail": "E-posta adresinizi girin",
+        "subscribe": "Abone Ol",
+        "allRightsReserved": "Tüm hakları saklıdır."
+    },
+    "products": {
+        "title": "Ürünler",
+        "description": "Tüm ürünlerimizi keşfedin",
+        "featuredTitle": "Öne Çıkan Ürünler",
+        "featuredDescription": "Sizin için özenle seçilmiş ürünler.",
+        "noProducts": "Ürün bulunamadı",
+        "sortBy": "Sırala",
+        "featured": "Öne Çıkanlar",
+        "priceLowToHigh": "Fiyat: Düşükten Yükseğe",
+        "priceHighToLow": "Fiyat: Yüksekten Düşüğe",
+        "showingProducts": "{count} ürün gösteriliyor"
+    },
+    "cart": {
+        "title": "Alışveriş Sepeti",
+        "empty": "Sepetiniz boş",
+        "emptyDescription": "Görünüşe göre henüz sepetinize ürün eklememişsiniz. Alışverişe başlayın!",
+        "subtotal": "Ara Toplam",
+        "total": "Toplam",
+        "checkout": "Ödemeye Geç",
+        "continueShopping": "Alışverişe Devam Et",
+        "clearCart": "Sepeti Temizle",
+        "itemAdded": "Ürün sepete eklendi",
+        "itemRemoved": "Ürün sepetten çıkarıldı",
+        "quantity": "Adet",
+        "remove": "Kaldır",
+        "orderSummary": "Sipariş Özeti",
+        "items": "Ürünler",
+        "shipping": "Kargo",
+        "freeShipping": "Ücretsiz",
+        "secureCheckout": "🔒 SSL ile güvenli ödeme",
+        "syncError": "Sepet senkronizasyonu başarısız. Lütfen tekrar deneyin.",
+        "loading": "Sepet yükleniyor..."
+    },
+    "nav": {
+        "home": "Ana Sayfa",
+        "products": "Ürünler",
+        "cart": "Sepet",
+        "account": "Hesabım"
+    },
+    "meta": {
+        "homeTitle": "ShopiLens - Online Alışveriş",
+        "homeDescription": "En iyi ürünleri keşfedin. Kaliteli, şık ve uygun fiyatlı.",
+        "productsTitle": "Ürünler",
+        "productsDescription": "Geniş ürün yelpazemizi keşfedin",
+        "cartTitle": "Alışveriş Sepeti",
+        "cartDescription": "Sepetinizdeki ürünleri görüntüleyin",
+        "organization": {
+            "name": "ShopiLens",
+            "contactType": "Müşteri Hizmetleri"
+        },
+        "website": {
+            "name": "ShopiLens",
+            "description": "En iyi ürünleri keşfedin."
+        }
+    },
+    "categories": {
+        "all": "Tümü",
+        "electronics": "Elektronik",
+        "jewelery": "Mücevher",
+        "mens_clothing": "Erkek Giyim",
+        "womens_clothing": "Kadın Giyim"
+    },
+    "auth": {
+        "login": "Giriş Yap",
+        "logout": "Çıkış Yap",
+        "register": "Kayıt Ol",
+        "email": "E-posta",
+        "password": "Şifre",
+        "forgotPassword": "Şifremi Unuttum",
+        "createAccount": "Hesap Oluştur",
+        "signUpDescription": "Başlamak için kaydolun ve özel özelliklerin kilidini açın.",
+        "fullName": "Ad Soyad",
+        "fullNamePlaceholder": "John Doe",
+        "emailPlaceholder": "ad@örnek.com",
+        "passwordPlaceholder": "Bir şifre oluşturun",
+        "creatingAccount": "Hesap Oluşturuluyor...",
+        "registrationFailed": "Kayıt başarısız",
+        "registrationSuccessLoginFailed": "Kayıt başarılı, ancak giriş başarısız oldu. Lütfen manuel olarak giriş yapın.",
+        "somethingWentWrong": "Bir şeyler yanlış gitti. Lütfen tekrar deneyin.",
+        "welcomeBack": "Hoş Geldiniz",
+        "enterDetailsToAccess": "Hesabınıza erişmek için bilgilerinizi girin.",
+        "signIn": "Giriş Yap",
+        "signingIn": "Giriş yapılıyor...",
+        "emailAddress": "E-posta Adresi",
+        "enterPassword": "Şifrenizi girin",
+        "orContinueWith": "Veya şununla devam edin",
+        "noAccount": "Hesabınız yok mu?",
+        "signUpFree": "Ücretsiz kaydolun",
+        "alreadyHaveAccount": "Zaten hesabınız var mı?",
+        "signInHere": "Giriş yapın",
+        "errorOccurred": "Bir Hata Oluştu",
+        "authenticationFailed": "Kimlik doğrulama başarısız oldu",
+        "tryAgain": "Tekrar Dene",
+        "backToHome": "Ana Sayfaya Dön",
+        "loggingOut": "Oturum kapatılıyor...",
+        "pleaseWait": "Lütfen bekleyin..."
+    },
+    "filters": {
+        "title": "Filtreler",
+        "category": "Kategori",
+        "priceRange": "Fiyat Aralığı",
+        "size": "Beden",
+        "apply": "Uygula",
+        "clear": "Temizle"
+    },
+    "profile": {
+        "title": "Profil Ayarları",
+        "description": "Kişisel bilgilerinizi ve hesap tercihlerinizi yönetin.",
+        "viewPublicProfile": "Herkese Açık Profili Görüntüle",
+        "sidebar": {
+            "premiumMember": "Premium Üye",
+            "profile": "Profil",
+            "orders": "Siparişler",
+            "addresses": "Adresler",
+            "paymentMethods": "Ödeme Yöntemleri",
+            "settings": "Ayarlar",
+            "signOut": "Çıkış Yap"
+        },
+        "avatar": {
+            "title": "Profil Fotoğrafı",
+            "description": "PNG, JPG veya GIF. Maksimum 2MB",
+            "uploadNew": "Yeni Yükle",
+            "delete": "Sil"
+        },
+        "form": {
+            "firstName": "Ad",
+            "lastName": "Soyad",
+            "emailAddress": "E-posta Adresi",
+            "verify": "Doğrula",
+            "phoneNumber": "Telefon Numarası",
+            "dateOfBirth": "Doğum Tarihi"
+        },
+        "security": {
+            "title": "Şifre ve Güvenlik",
+            "description": "Şifrenizi ve 2FA ayarlarınızı yönetin.",
+            "updatePassword": "Şifreyi Güncelle",
+            "password": "Şifre",
+            "lastChanged": "{time} önce değiştirildi"
+        },
+        "deleteAccount": {
+            "title": "Hesabı Sil",
+            "description": "Hesabınızı sildiğinizde geri dönüş yoktur. Lütfen emin olun.",
+            "button": "Hesabı Sil"
+        },
+        "actions": {
+            "cancel": "İptal",
+            "saveChanges": "Değişiklikleri Kaydet"
+        }
+    },
+    "errors": {
+        "goBack": "Geri Dön",
+        "returnHome": "Ana Sayfaya Dön",
+        "contactSupport": "Yardım mı lazım? Destek ile iletişime geçin",
+        "searchProducts": "Ürün ara...",
+        "newArrivals": "Yeni Gelenler",
+        "bestSellers": "En Çok Satanlar",
+        "helpCenter": "Yardım Merkezi",
+        "refreshPage": "Sayfayı Yenile",
+        "403": {
+            "title": "403",
+            "heading": "Erişim Engellendi",
+            "description": "Bu alana erişim izniniz yok. Bu sayfa yalnızca yetkili kullanıcılar için.",
+            "restricted": "KISITLI"
+        },
+        "404": {
+            "title": "404",
+            "heading": "Sayfa Bulunamadı",
+            "description": "Aradığınız sayfa taşınmış veya mevcut değil. Bir ürün aramayı deneyin veya ana sayfaya dönün."
+        },
+        "500": {
+            "title": "500",
+            "heading": "Sunucu Hatası",
+            "description": "Bir şeyler ters gitti. Sorunu çözmek için çalışıyoruz. Lütfen sayfayı yenileyin veya daha sonra tekrar deneyin.",
+            "systemMalfunction": "SİSTEM HATASI"
+        }
+    }
+}
