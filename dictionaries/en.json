@@ -1,0 +1,79 @@
+{
+    "common": {
+        "loading": "Loading...",
+        "error": "An error occurred",
+        "search": "Search products...",
+        "price": "Price",
+        "currency": "$",
+        "addToCart": "Add to Cart",
+        "viewDetails": "View Details",
+        "shopNow": "Shop Now",
+        "viewAll": "View All",
+        "newsletter": "Join the Newsletter",
+        "newsletterDescription": "Sign up for new products and special offers. Get 15% off your first order.",
+        "enterEmail": "Enter your email",
+        "subscribe": "Subscribe",
+        "allRightsReserved": "All rights reserved."
+    },
+    "products": {
+        "title": "Products",
+        "description": "Explore all our products",
+        "featuredTitle": "Featured Products",
+        "featuredDescription": "Hand-picked items just for you.",
+        "noProducts": "No products found",
+        "sortBy": "Sort by",
+        "featured": "Featured",
+        "priceLowToHigh": "Price: Low to High",
+        "priceHighToLow": "Price: High to Low",
+        "showingProducts": "Showing {count} products"
+    },
+    "cart": {
+        "title": "Shopping Cart",
+        "empty": "Your cart is empty",
+        "subtotal": "Subtotal",
+        "total": "Total",
+        "checkout": "Checkout",
+        "continueShopping": "Continue Shopping",
+        "clearCart": "Clear Cart",
+        "itemAdded": "Item added to cart",
+        "itemRemoved": "Item removed from cart",
+        "quantity": "Quantity"
+    },
+    "nav": {
+        "home": "Home",
+        "products": "Products",
+        "cart": "Cart",
+        "account": "Account"
+    },
+    "meta": {
+        "homeTitle": "ShopILens - Online Shopping",
+        "homeDescription": "Discover the best products. Quality, stylish, and affordable.",
+        "productsTitle": "Products",
+        "productsDescription": "Explore our wide range of products",
+        "cartTitle": "Shopping Cart",
+        "cartDescription": "View items in your cart"
+    },
+    "categories": {
+        "all": "All",
+        "electronics": "Electronics",
+        "jewelery": "Jewelry",
+        "mens_clothing": "Men's Clothing",
+        "womens_clothing": "Women's Clothing"
+    },
+    "auth": {
+        "login": "Log In",
+        "logout": "Log Out",
+        "register": "Register",
+        "email": "Email",
+        "password": "Password",
+        "forgotPassword": "Forgot Password"
+    },
+    "filters": {
+        "title": "Filters",
+        "category": "Category",
+        "priceRange": "Price Range",
+        "size": "Size",
+        "apply": "Apply",
+        "clear": "Clear"
+    }
+}
