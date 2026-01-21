@@ -5,15 +5,13 @@
 
 import Link from "next/link";
 import { Instagram, Twitter } from "lucide-react";
-import type { Dictionary } from "@/types";
 import { useTranslations } from "next-intl";
 
 interface FooterProps {
     lang: string;
-    dict: Dictionary;
 }
 
-export function Footer({ lang }: Omit<FooterProps, "dict">) {
+export function Footer({ lang }: FooterProps) {
     const t = useTranslations();
     return (
         <footer className="border-t border-border bg-card mt-auto">

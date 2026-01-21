@@ -19,7 +19,7 @@ const intlMiddleware = createMiddleware({
     defaultLocale
 });
 
-export default async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
     // Static files ve API routes'u atla (matcher hallediyor ama güvenlik için ekstra kontrol)

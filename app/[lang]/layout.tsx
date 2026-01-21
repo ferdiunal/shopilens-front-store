@@ -6,8 +6,7 @@
 
 import { notFound } from "next/navigation";
 import { locales, type Locale } from "@/lib/i18n/config";
-import { getDictionary } from "@/lib/i18n/dictionaries";
-import { getMessages } from "next-intl/server";
+import { getMessages, getTranslations } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import { StoreProvider } from "@/lib/store/provider";
 import { AuthProvider } from "@/components/providers/session-provider";
@@ -49,16 +48,16 @@ export async function generateMetadata({
     params: Promise<{ lang: string }>;
 }): Promise<Metadata> {
     const { lang } = await params;
-    const dict = await getDictionary(lang as Locale);
+    const t = await getTranslations({ locale: lang, namespace: "meta" });
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://shopilens.com";
 
     return {
         metadataBase: new URL(baseUrl),
         title: {
-            default: dict.meta.homeTitle,
+            default: t('homeTitle'),
             template: `%s | ShopiLens`,
         },
-        description: dict.meta.homeDescription,
+        description: t('homeDescription'),
         keywords: [
             "e-commerce",
             "online shopping",
@@ -73,13 +72,13 @@ export async function generateMetadata({
             locale: lang === "tr" ? "tr_TR" : "en_US",
             url: baseUrl,
             siteName: "ShopiLens",
-            title: dict.meta.homeTitle,
-            description: dict.meta.homeDescription,
+            title: t('homeTitle'),
+            description: t('homeDescription'),
         },
         twitter: {
             card: "summary_large_image",
-            title: dict.meta.homeTitle,
-            description: dict.meta.homeDescription,
+            title: t('homeTitle'),
+            description: t('homeDescription'),
         },
         robots: {
             index: true,
@@ -103,7 +102,6 @@ export default async function LanguageLayout({ children, params }: LanguageLayou
         notFound();
     }
 
-    const dict = await getDictionary(lang as Locale);
     const messages = await getMessages();
 
     return (

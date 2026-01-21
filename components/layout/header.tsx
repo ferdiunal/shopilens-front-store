@@ -11,16 +11,14 @@ import { Search, ShoppingBag, User, Sun, Moon, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import type { Dictionary } from "@/types";
 import { useTranslations } from "next-intl";
 
 interface HeaderProps {
     lang: string;
-    dict: Dictionary;
     cartItemCount?: number;
 }
 
-export function Header({ lang, cartItemCount = 0 }: Omit<HeaderProps, "dict">) {
+export function Header({ lang, cartItemCount = 0 }: HeaderProps) {
     const { theme, setTheme } = useTheme();
     const t = useTranslations();
 
