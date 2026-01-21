@@ -7,6 +7,8 @@
 import { notFound } from "next/navigation";
 import { locales, type Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/dictionaries";
+import { getMessages } from "next-intl/server";
+import { NextIntlClientProvider } from "next-intl";
 import { StoreProvider } from "@/lib/store/provider";
 import { AuthProvider } from "@/components/providers/session-provider";
 import { Header } from "@/components/layout/header";
@@ -102,13 +104,16 @@ export default async function LanguageLayout({ children, params }: LanguageLayou
     }
 
     const dict = await getDictionary(lang as Locale);
+    const messages = await getMessages();
 
     return (
         <StoreProvider>
             <AuthProvider>
-                <Header lang={lang} dict={dict} />
-                <main className="flex-grow">{children}</main>
-                <Footer lang={lang} dict={dict} />
+                <NextIntlClientProvider messages={messages}>
+                    <Header lang={lang} />
+                    <main className="flex-grow">{children}</main>
+                    <Footer lang={lang} />
+                </NextIntlClientProvider>
             </AuthProvider>
         </StoreProvider>
     );

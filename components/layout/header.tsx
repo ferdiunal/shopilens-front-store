@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import type { Dictionary } from "@/types";
+import { useTranslations } from "next-intl";
 
 interface HeaderProps {
     lang: string;
@@ -19,8 +20,9 @@ interface HeaderProps {
     cartItemCount?: number;
 }
 
-export function Header({ lang, dict, cartItemCount = 0 }: HeaderProps) {
+export function Header({ lang, cartItemCount = 0 }: Omit<HeaderProps, "dict">) {
     const { theme, setTheme } = useTheme();
+    const t = useTranslations();
 
     return (
         <header className="sticky top-0 z-50 w-full border-b border-border glass">
@@ -58,19 +60,19 @@ export function Header({ lang, dict, cartItemCount = 0 }: HeaderProps) {
                             href={`/${lang}/products`}
                             className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
                         >
-                            {dict.nav.products}
+                            {t('nav.products')}
                         </Link>
                         <Link
                             href={`/${lang}/products?category=electronics`}
                             className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
                         >
-                            {dict.categories.electronics}
+                            {t('categories.electronics')}
                         </Link>
                         <Link
                             href={`/${lang}/products?category=jewelery`}
                             className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
                         >
-                            {dict.categories.jewelery}
+                            {t('categories.jewelery')}
                         </Link>
                     </nav>
 
@@ -81,7 +83,7 @@ export function Header({ lang, dict, cartItemCount = 0 }: HeaderProps) {
                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
                             <Input
                                 type="search"
-                                placeholder={dict.common.search}
+                                placeholder={t('common.search')}
                                 className="w-64 pl-10 h-10"
                             />
                         </div>
@@ -122,7 +124,7 @@ export function Header({ lang, dict, cartItemCount = 0 }: HeaderProps) {
 
                         {/* Login (Desktop) */}
                         <Button className="hidden lg:flex" size="sm">
-                            {dict.auth.login}
+                            {t('auth.login')}
                         </Button>
 
                         {/* Mobile Menu */}

@@ -6,13 +6,15 @@
 import Link from "next/link";
 import { Instagram, Twitter } from "lucide-react";
 import type { Dictionary } from "@/types";
+import { useTranslations } from "next-intl";
 
 interface FooterProps {
     lang: string;
     dict: Dictionary;
 }
 
-export function Footer({ lang, dict }: FooterProps) {
+export function Footer({ lang }: Omit<FooterProps, "dict">) {
+    const t = useTranslations();
     return (
         <footer className="border-t border-border bg-card mt-auto">
             <div className="mx-auto max-w-[1280px] px-4 sm:px-8 py-10">
@@ -87,7 +89,7 @@ export function Footer({ lang, dict }: FooterProps) {
                 {/* Copyright */}
                 <div className="mt-8 pt-6 border-t border-border text-center">
                     <p className="text-sm text-muted-foreground">
-                        © {new Date().getFullYear()} ShopiLens. {dict.common.allRightsReserved}
+                        © {new Date().getFullYear()} ShopiLens. {t('common.allRightsReserved')}
                     </p>
                 </div>
             </div>

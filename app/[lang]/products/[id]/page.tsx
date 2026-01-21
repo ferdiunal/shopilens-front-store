@@ -5,9 +5,8 @@
 
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getDictionary } from "@/lib/i18n/dictionaries";
 import { ProductService } from "@/lib/api/product.service";
-import type { Locale } from "@/lib/i18n/config";
+import { getTranslations } from "next-intl/server";
 import { locales } from "@/lib/i18n/config";
 import { Breadcrumb } from "@/components/layout/breadcrumb";
 import { ProductGallery } from "@/components/product/product-gallery";
@@ -80,7 +79,7 @@ export default async function ProductDetailPage({
     params,
 }: ProductDetailPageProps) {
     const { lang, id } = await params;
-    const dict = await getDictionary(lang as Locale);
+    const t = await getTranslations({ locale: lang });
     const product = await ProductService.getById(Number(id));
 
     if (!product) {
@@ -89,8 +88,8 @@ export default async function ProductDetailPage({
 
     // Breadcrumb items
     const breadcrumbItems = [
-        { label: dict.nav.home, href: `/${lang}` },
-        { label: dict.nav.products, href: `/${lang}/products` },
+        { label: t('nav.home'), href: `/${lang}` },
+        { label: t('nav.products'), href: `/${lang}/products` },
         { label: product.category, href: `/${lang}/products?category=${encodeURIComponent(product.category)}` },
         { label: product.title },
     ];
@@ -186,7 +185,7 @@ export default async function ProductDetailPage({
                         {/* Interactive Client Section */}
                         <ProductDetailClient
                             product={product}
-                            addToCartLabel={dict.common.addToCart}
+                            addToCartLabel={t('common.addToCart')}
                         />
 
                         {/* Accordion Info */}

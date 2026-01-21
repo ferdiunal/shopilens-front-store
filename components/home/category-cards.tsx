@@ -4,11 +4,10 @@
 
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import type { Dictionary } from "@/types";
+import { getTranslations } from "next-intl/server";
 
 interface CategoryCardsProps {
     lang: string;
-    dict: Dictionary;
     categories: string[];
 }
 
@@ -23,11 +22,18 @@ const categoryImages: Record<string, string> = {
         "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
 };
 
-export function CategoryCards({ lang, dict, categories }: CategoryCardsProps) {
+export async function CategoryCards({ lang, categories }: CategoryCardsProps) {
+    const t = await getTranslations({ locale: lang, namespace: "categories" });
+
     // Kategori isimlerini çevir
     const translateCategory = (category: string): string => {
         const key = category.replace("'s ", "_").replace(" ", "_").toLowerCase();
-        return dict.categories[key as keyof typeof dict.categories] || category;
+        // Since we are using namespace 'categories', we can try to get the translation directly
+        // However, t() is strict about keys if we use typescript.
+        // But t() with dynamic key might fallback or throw if strict.
+        // For now let's assume keys exist or handle it.
+        // Actually best way:
+        return t.has(key) ? t(key) : category;
     };
 
     return (

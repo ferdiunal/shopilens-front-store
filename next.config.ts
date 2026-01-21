@@ -74,4 +74,8 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+const createNextIntlPlugin = require('next-intl/plugin');
+
+const withNextIntl = createNextIntlPlugin();
+
+export default withNextIntl(nextConfig);

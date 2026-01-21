@@ -5,9 +5,8 @@
 
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getDictionary } from "@/lib/i18n/dictionaries";
 import { ProductService } from "@/lib/api/product.service";
-import type { Locale } from "@/lib/i18n/config";
+import { getTranslations } from "next-intl/server";
 import { Breadcrumb } from "@/components/layout/breadcrumb";
 import { ProductGrid } from "@/components/product/product-grid";
 import { Button } from "@/components/ui/button";
@@ -29,11 +28,11 @@ export async function generateMetadata({
     params,
 }: ProductsPageProps): Promise<Metadata> {
     const { lang } = await params;
-    const dict = await getDictionary(lang as Locale);
+    const t = await getTranslations({ locale: lang, namespace: "meta" });
 
     return {
-        title: dict.meta.productsTitle,
-        description: dict.meta.productsDescription,
+        title: t('productsTitle'),
+        description: t('productsDescription'),
     };
 }
 
@@ -43,7 +42,7 @@ export default async function ProductsPage({
 }: ProductsPageProps) {
     const { lang } = await params;
     const { category, sort } = await searchParams;
-    const dict = await getDictionary(lang as Locale);
+    const t = await getTranslations({ locale: lang });
 
     // Data fetching
     const [products, categories] = await Promise.all([
@@ -61,17 +60,23 @@ export default async function ProductsPage({
         sortedProducts.sort((a, b) => b.price - a.price);
     }
 
+    // Custom breadcrumb translation helper if needed, or just use t
+    // The dict.nav.home -> t('nav.home')
+
     // Breadcrumb items
     const breadcrumbItems = [
-        { label: dict.nav.home, href: `/${lang}` },
-        { label: dict.nav.products, href: category ? `/${lang}/products` : undefined },
+        { label: t('nav.home'), href: `/${lang}` },
+        { label: t('nav.products'), href: category ? `/${lang}/products` : undefined },
         ...(category ? [{ label: category }] : []),
     ];
 
     // Kategori çevirisi
     const translateCategory = (cat: string): string => {
         const key = cat.replace("'s ", "_").replace(" ", "_").toLowerCase();
-        return dict.categories[key as keyof typeof dict.categories] || cat;
+        // t.has check is optional if we trust keys, but good for safety
+        // Trying to access t(`categories.${key}`)
+        // Note: next-intl t is type safe if generated, otherwise loose string
+        return t.has(`categories.${key}`) ? t(`categories.${key}`) : cat;
     };
 
     return (
@@ -83,18 +88,18 @@ export default async function ProductsPage({
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
                 <div className="flex flex-col gap-1">
                     <h1 className="text-3xl md:text-4xl font-black tracking-tight">
-                        {category ? translateCategory(category) : dict.products.title}
+                        {category ? translateCategory(category) : t('products.title')}
                     </h1>
-                    <p className="text-muted-foreground">{dict.products.description}</p>
+                    <p className="text-muted-foreground">{t('products.description')}</p>
                 </div>
                 <div className="flex items-center gap-3">
                     <span className="text-sm text-muted-foreground whitespace-nowrap">
-                        {sortedProducts.length} {dict.products.title.toLowerCase()}
+                        {sortedProducts.length} {t('products.title').toLowerCase()}
                     </span>
                     {/* Sort Dropdown */}
                     <div className="relative group">
                         <Button variant="outline" size="sm">
-                            {dict.products.sortBy}: {dict.products.featured}
+                            {t('products.sortBy')}: {t('products.featured')}
                             <ChevronDown className="size-4" />
                         </Button>
                     </div>
@@ -112,7 +117,7 @@ export default async function ProductsPage({
                             open
                         >
                             <summary className="flex cursor-pointer items-center justify-between p-4 hover:bg-accent transition-colors select-none">
-                                <span className="font-semibold">{dict.filters.category}</span>
+                                <span className="font-semibold">{t('filters.category')}</span>
                                 <ChevronDown className="size-4 text-muted-foreground transition-transform duration-200 group-open:rotate-180" />
                             </summary>
                             <div className="px-4 pb-4 pt-0">
@@ -123,7 +128,7 @@ export default async function ProductsPage({
                                     >
                                         <Checkbox checked={!category} />
                                         <span className="text-muted-foreground group-hover/item:text-primary transition-colors">
-                                            {dict.categories.all}
+                                            {t('categories.all')}
                                         </span>
                                     </Link>
                                     {categories.map((cat) => (
@@ -145,7 +150,7 @@ export default async function ProductsPage({
                         {/* Price Filter */}
                         <details className="group bg-card rounded-xl border border-border overflow-hidden">
                             <summary className="flex cursor-pointer items-center justify-between p-4 hover:bg-accent transition-colors select-none">
-                                <span className="font-semibold">{dict.filters.priceRange}</span>
+                                <span className="font-semibold">{t('filters.priceRange')}</span>
                                 <ChevronDown className="size-4 text-muted-foreground transition-transform duration-200 group-open:rotate-180" />
                             </summary>
                             <div className="px-4 pb-4 pt-2">
@@ -163,7 +168,7 @@ export default async function ProductsPage({
                                     />
                                 </div>
                                 <Button variant="secondary" className="w-full mt-3" size="sm">
-                                    {dict.filters.apply}
+                                    {t('filters.apply')}
                                 </Button>
                             </div>
                         </details>
@@ -177,16 +182,16 @@ export default async function ProductsPage({
                             products={sortedProducts}
                             lang={lang}
                             columns={3}
-                            addToCartLabel={dict.common.addToCart}
+                            addToCartLabel={t('common.addToCart')}
                         />
                     ) : (
                         <div className="flex flex-col items-center justify-center py-20 text-center">
                             <p className="text-muted-foreground text-lg">
-                                {dict.products.noProducts}
+                                {t('products.noProducts')}
                             </p>
                             <Link href={`/${lang}/products`}>
                                 <Button variant="outline" className="mt-4">
-                                    {dict.filters.clear}
+                                    {t('filters.clear')}
                                 </Button>
                             </Link>
                         </div>

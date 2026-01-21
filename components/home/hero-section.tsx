@@ -4,14 +4,10 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import type { Dictionary } from "@/types";
+import { getTranslations } from "next-intl/server";
 
-interface HeroSectionProps {
-    lang: string;
-    dict: Dictionary;
-}
-
-export function HeroSection({ lang, dict }: HeroSectionProps) {
+export async function HeroSection({ lang }: { lang: string }) {
+    const t = await getTranslations({ locale: lang });
     return (
         <div className="relative flex min-h-[560px] flex-col items-center justify-center overflow-hidden rounded-xl p-8 text-center shadow-sm">
             {/* Background Image */}
@@ -25,17 +21,17 @@ export function HeroSection({ lang, dict }: HeroSectionProps) {
             {/* Content */}
             <div className="relative z-10 flex flex-col items-center gap-4 max-w-2xl animate-fade-in">
                 <h1 className="text-white text-5xl font-black leading-tight tracking-tight sm:text-6xl drop-shadow-md">
-                    {dict.meta.homeTitle}
+                    {t('meta.homeTitle')}
                 </h1>
                 <p className="text-white/90 text-lg font-medium sm:text-xl drop-shadow-sm">
-                    {dict.meta.homeDescription}
+                    {t('meta.homeDescription')}
                 </p>
                 <Link href={`/${lang}/products`}>
                     <Button
                         size="xl"
                         className="mt-4 bg-white text-foreground hover:bg-primary hover:text-white transition-all duration-300 shadow-lg"
                     >
-                        {dict.common.shopNow}
+                        {t('common.shopNow')}
                     </Button>
                 </Link>
             </div>
