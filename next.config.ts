@@ -79,7 +79,8 @@ const nextConfig: NextConfig = {
 
   // Multi-zone Rewrites
   async rewrites() {
-    const cartAppUrl = process.env.CART_APP_URL || 'http://localhost:3001';
+    const cartAppUrl = process.env.NEXT_PUBLIC_CART_APP_URL || process.env.CART_APP_URL || 'http://localhost:3001';
+    console.log(cartAppUrl);
 
     return [
       {
