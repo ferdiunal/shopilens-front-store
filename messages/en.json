@@ -1,0 +1,194 @@
+{
+    "common": {
+        "loading": "Loading...",
+        "error": "An error occurred",
+        "search": "Search products...",
+        "price": "Price",
+        "currency": "$",
+        "addToCart": "Add to Cart",
+        "viewDetails": "View Details",
+        "shopNow": "Shop Now",
+        "viewAll": "View All",
+        "newsletter": "Join the Newsletter",
+        "newsletterDescription": "Sign up for new products and special offers. Get 15% off your first order.",
+        "enterEmail": "Enter your email",
+        "subscribe": "Subscribe",
+        "allRightsReserved": "All rights reserved."
+    },
+    "products": {
+        "title": "Products",
+        "description": "Explore all our products",
+        "featuredTitle": "Featured Products",
+        "featuredDescription": "Hand-picked items just for you.",
+        "noProducts": "No products found",
+        "sortBy": "Sort by",
+        "featured": "Featured",
+        "priceLowToHigh": "Price: Low to High",
+        "priceHighToLow": "Price: High to Low",
+        "showingProducts": "Showing {count} products"
+    },
+    "cart": {
+        "title": "Shopping Cart",
+        "empty": "Your cart is empty",
+        "emptyDescription": "Looks like you haven't added any items to your cart yet. Start shopping to fill it up!",
+        "subtotal": "Subtotal",
+        "total": "Total",
+        "checkout": "Checkout",
+        "continueShopping": "Continue Shopping",
+        "clearCart": "Clear Cart",
+        "itemAdded": "Item added to cart",
+        "itemRemoved": "Item removed from cart",
+        "quantity": "Quantity",
+        "remove": "Remove",
+        "orderSummary": "Order Summary",
+        "items": "Items",
+        "shipping": "Shipping",
+        "freeShipping": "Free",
+        "secureCheckout": "🔒 Secure checkout powered by SSL",
+        "syncError": "Failed to sync cart. Please try again.",
+        "loading": "Loading cart..."
+    },
+    "nav": {
+        "home": "Home",
+        "products": "Products",
+        "cart": "Cart",
+        "account": "Account"
+    },
+    "meta": {
+        "homeTitle": "ShopiLens - Online Shopping",
+        "homeDescription": "Discover the best products. Quality, stylish, and affordable.",
+        "productsTitle": "Products",
+        "productsDescription": "Explore our wide range of products",
+        "cartTitle": "Shopping Cart",
+        "cartDescription": "View items in your cart",
+        "organization": {
+            "name": "ShopiLens",
+            "contactType": "Customer Service"
+        },
+        "website": {
+            "name": "ShopiLens",
+            "description": "Discover the best products."
+        }
+    },
+    "categories": {
+        "all": "All",
+        "electronics": "Electronics",
+        "jewelery": "Jewelry",
+        "mens_clothing": "Men's Clothing",
+        "womens_clothing": "Women's Clothing"
+    },
+    "auth": {
+        "login": "Log In",
+        "logout": "Log Out",
+        "register": "Register",
+        "email": "Email",
+        "password": "Password",
+        "forgotPassword": "Forgot Password",
+        "createAccount": "Create Account",
+        "signUpDescription": "Sign up to get started and unlock exclusive features.",
+        "fullName": "Full Name",
+        "fullNamePlaceholder": "John Doe",
+        "emailPlaceholder": "name@example.com",
+        "passwordPlaceholder": "Create a password",
+        "creatingAccount": "Creating Account...",
+        "registrationFailed": "Registration failed",
+        "registrationSuccessLoginFailed": "Registration successful, but login failed. Please sign in manually.",
+        "somethingWentWrong": "Something went wrong. Please try again.",
+        "welcomeBack": "Welcome Back",
+        "enterDetailsToAccess": "Enter your details to access your account.",
+        "signIn": "Sign In",
+        "signingIn": "Signing in...",
+        "emailAddress": "Email Address",
+        "enterPassword": "Enter your password",
+        "orContinueWith": "Or continue with",
+        "noAccount": "Don't have an account?",
+        "signUpFree": "Sign up for free",
+        "alreadyHaveAccount": "Already have an account?",
+        "signInHere": "Sign in",
+        "errorOccurred": "An Error Occurred",
+        "authenticationFailed": "Authentication failed",
+        "tryAgain": "Try Again",
+        "backToHome": "Back to Home",
+        "loggingOut": "Logging out...",
+        "pleaseWait": "Please wait..."
+    },
+    "filters": {
+        "title": "Filters",
+        "category": "Category",
+        "priceRange": "Price Range",
+        "size": "Size",
+        "apply": "Apply",
+        "clear": "Clear"
+    },
+    "profile": {
+        "title": "Profile Settings",
+        "description": "Manage your personal information and account preferences.",
+        "viewPublicProfile": "View Public Profile",
+        "sidebar": {
+            "premiumMember": "Premium Member",
+            "profile": "Profile",
+            "orders": "Orders",
+            "addresses": "Addresses",
+            "paymentMethods": "Payment Methods",
+            "settings": "Settings",
+            "signOut": "Sign Out"
+        },
+        "avatar": {
+            "title": "Profile Picture",
+            "description": "PNG, JPG or GIF up to 2MB",
+            "uploadNew": "Upload New",
+            "delete": "Delete"
+        },
+        "form": {
+            "firstName": "First Name",
+            "lastName": "Last Name",
+            "emailAddress": "Email Address",
+            "verify": "Verify",
+            "phoneNumber": "Phone Number",
+            "dateOfBirth": "Date of Birth"
+        },
+        "security": {
+            "title": "Password & Security",
+            "description": "Manage your password and 2FA settings.",
+            "updatePassword": "Update Password",
+            "password": "Password",
+            "lastChanged": "Last changed {time} ago"
+        },
+        "deleteAccount": {
+            "title": "Delete Account",
+            "description": "Once you delete your account, there is no going back. Please be certain.",
+            "button": "Delete Account"
+        },
+        "actions": {
+            "cancel": "Cancel",
+            "saveChanges": "Save Changes"
+        }
+    },
+    "errors": {
+        "goBack": "Go Back",
+        "returnHome": "Return to Home",
+        "contactSupport": "Need help? Contact Support",
+        "searchProducts": "Search for products...",
+        "newArrivals": "New Arrivals",
+        "bestSellers": "Best Sellers",
+        "helpCenter": "Help Center",
+        "refreshPage": "Refresh Page",
+        "403": {
+            "title": "403",
+            "heading": "Access Denied",
+            "description": "You don't have permission to access this area. This page is restricted to authorized personnel only.",
+            "restricted": "RESTRICTED"
+        },
+        "404": {
+            "title": "404",
+            "heading": "Page Not Found",
+            "description": "The page you are looking for has moved or does not exist. Try searching for a product or return to the homepage."
+        },
+        "500": {
+            "title": "500",
+            "heading": "Internal Server Error",
+            "description": "Something went wrong on our end. We are working to fix it. Please try refreshing the page or come back later.",
+            "systemMalfunction": "SYSTEM MALFUNCTION"
+        }
+    }
+}
