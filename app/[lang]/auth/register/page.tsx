@@ -6,10 +6,16 @@ import { AuthHeader } from "@/components/auth/auth-header";
 import { SocialButtons } from "@/components/auth/social-buttons";
 import { RegisterForm } from "@/components/auth/register-form";
 
+import { locales } from "@/lib/i18n/config";
+
 export const metadata: Metadata = {
     title: "Register - ShopiLens",
     description: "Register to your account",
 };
+
+export async function generateStaticParams() {
+    return locales.map((lang) => ({ lang }));
+}
 
 export default async function RegisterPage({ params }: { params: Promise<{ lang: string }> }) {
     const { lang: locale } = await params;

@@ -6,10 +6,16 @@ import { LoginForm } from "@/components/auth/login-form";
 import { SocialButtons } from "@/components/auth/social-buttons";
 import Link from "next/link";
 
+import { locales } from "@/lib/i18n/config";
+
 export const metadata: Metadata = {
     title: "Login - ShopiLens",
     description: "Login to your account",
 };
+
+export async function generateStaticParams() {
+    return locales.map((lang) => ({ lang }));
+}
 
 export default async function LoginPage({ params }: { params: Promise<{ lang: string }> }) {
     const { lang: locale } = await params;

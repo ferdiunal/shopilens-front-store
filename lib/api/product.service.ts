@@ -16,7 +16,8 @@ import type {
 const API_BASE = "https://fakestoreapi.com";
 
 const HEADERS = {
-    "User-Agent": "Mozilla/5.0 (compatible; Shopilens/1.0)",
+    // Bazı API'ler botları engellediği için daha gerçekçi bir User-Agent kullanıyoruz
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
     "Accept": "application/json"
 };
 
@@ -285,19 +286,31 @@ export class ProductService {
      * SSG: Build time'da ürün sayfaları oluşturmak için
      */
     static async getAllIds(): Promise<{ id: string }[]> {
-        const products = await this.getAll();
-        return products.map((product) => ({
-            id: String(product.id),
-        }));
+        try {
+            const products = await this.getAll();
+            return products.map((product) => ({
+                id: String(product.id),
+            }));
+        } catch (error) {
+            console.warn("getAllIds error (skipping static params):", error);
+            // Build fail olmaması için boş array dönüyoruz.
+            // Sayfalar ilk istekte SSR olarak oluşturulacak (ISR).
+            return [];
+        }
     }
 
     /**
      * generateStaticParams için tüm kategori slug'ları
      */
     static async getAllCategorySlugs(): Promise<{ category: string }[]> {
-        const categories = await this.getCategories();
-        return categories.map((category) => ({
-            category: encodeURIComponent(category),
-        }));
+        try {
+            const categories = await this.getCategories();
+            return categories.map((category) => ({
+                category: encodeURIComponent(category),
+            }));
+        } catch (error) {
+            console.warn("getAllCategorySlugs error:", error);
+            return [];
+        }
     }
 }

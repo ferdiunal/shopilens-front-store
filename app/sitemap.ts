@@ -38,33 +38,39 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
 
     // Dinamik ürün sayfaları
-    const products = await ProductService.getAll();
     const productPages: MetadataRoute.Sitemap = [];
-
-    for (const locale of locales) {
-        for (const product of products) {
-            productPages.push({
-                url: `${baseUrl}/${locale}/products/${product.id}`,
-                lastModified: new Date(),
-                changeFrequency: "weekly",
-                priority: 0.8,
-            });
+    try {
+        const products = await ProductService.getAll();
+        for (const locale of locales) {
+            for (const product of products) {
+                productPages.push({
+                    url: `${baseUrl}/${locale}/products/${product.id}`,
+                    lastModified: new Date(),
+                    changeFrequency: "weekly",
+                    priority: 0.8,
+                });
+            }
         }
+    } catch (error) {
+        console.warn("Sitemap generation warning: Failed to fetch products", error);
     }
 
     // Kategori sayfaları
-    const categories = await ProductService.getCategories();
     const categoryPages: MetadataRoute.Sitemap = [];
-
-    for (const locale of locales) {
-        for (const category of categories) {
-            categoryPages.push({
-                url: `${baseUrl}/${locale}/products?category=${encodeURIComponent(category)}`,
-                lastModified: new Date(),
-                changeFrequency: "daily",
-                priority: 0.7,
-            });
+    try {
+        const categories = await ProductService.getCategories();
+        for (const locale of locales) {
+            for (const category of categories) {
+                categoryPages.push({
+                    url: `${baseUrl}/${locale}/products?category=${encodeURIComponent(category)}`,
+                    lastModified: new Date(),
+                    changeFrequency: "daily",
+                    priority: 0.7,
+                });
+            }
         }
+    } catch (error) {
+        console.warn("Sitemap generation warning: Failed to fetch categories", error);
     }
 
     return [...staticPages, ...productPages, ...categoryPages];
