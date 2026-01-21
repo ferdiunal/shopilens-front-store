@@ -15,6 +15,11 @@ import type {
 
 const API_BASE = "https://fakestoreapi.com";
 
+const HEADERS = {
+    "User-Agent": "Mozilla/5.0 (compatible; Shopilens/1.0)",
+    "Accept": "application/json"
+};
+
 /**
  * Cache stratejileri
  */
@@ -56,6 +61,7 @@ export class ProductService {
         if (queryString) url += `?${queryString}`;
 
         const response = await fetch(url, {
+            headers: HEADERS,
             next: {
                 revalidate: CACHE.PRODUCTS,
                 tags: ["products"]
@@ -76,6 +82,7 @@ export class ProductService {
     static async getById(id: number): Promise<Product | null> {
         try {
             const response = await fetch(`${API_BASE}/products/${id}`, {
+                headers: HEADERS,
                 next: {
                     revalidate: CACHE.DETAIL,
                     tags: ["products", `product-${id}`]
@@ -111,6 +118,7 @@ export class ProductService {
         if (queryString) url += `?${queryString}`;
 
         const response = await fetch(url, {
+            headers: HEADERS,
             next: {
                 revalidate: CACHE.PRODUCTS,
                 tags: ["products", `category-${category}`]
@@ -130,6 +138,7 @@ export class ProductService {
      */
     static async getCategories(): Promise<Category[]> {
         const response = await fetch(`${API_BASE}/products/categories`, {
+            headers: HEADERS,
             next: {
                 revalidate: CACHE.STATIC,
                 tags: ["categories"]
@@ -154,7 +163,7 @@ export class ProductService {
     static async create(product: CreateProductInput): Promise<Product> {
         const response = await fetch(`${API_BASE}/products`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { ...HEADERS, "Content-Type": "application/json" },
             body: JSON.stringify(product),
             cache: "no-store",
         });
@@ -172,7 +181,7 @@ export class ProductService {
     static async update(id: number, product: UpdateProductInput): Promise<Product> {
         const response = await fetch(`${API_BASE}/products/${id}`, {
             method: "PUT",
-            headers: { "Content-Type": "application/json" },
+            headers: { ...HEADERS, "Content-Type": "application/json" },
             body: JSON.stringify(product),
             cache: "no-store",
         });
@@ -189,6 +198,7 @@ export class ProductService {
      */
     static async delete(id: number): Promise<Product> {
         const response = await fetch(`${API_BASE}/products/${id}`, {
+            headers: HEADERS,
             method: "DELETE",
             cache: "no-store",
         });
