@@ -12,6 +12,7 @@ interface ProductGridProps {
     lang: string;
     className?: string;
     columns?: 2 | 3 | 4;
+    addToCartLabel?: string;
 }
 
 export function ProductGrid({
@@ -19,6 +20,7 @@ export function ProductGrid({
     lang,
     className,
     columns = 4,
+    addToCartLabel,
 }: ProductGridProps) {
     const gridCols = {
         2: "grid-cols-1 sm:grid-cols-2",
@@ -35,7 +37,12 @@ export function ProductGrid({
             )}
         >
             {products.map((product) => (
-                <ProductCard key={product.id} product={product} lang={lang} />
+                <ProductCard
+                    key={product.id}
+                    product={product}
+                    lang={lang}
+                    addToCartLabel={addToCartLabel}
+                />
             ))}
         </div>
     );

@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * ProductAccordion Component
  * Description, Shipping & Returns, Materials & Care

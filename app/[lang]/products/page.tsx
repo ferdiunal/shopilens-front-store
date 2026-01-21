@@ -173,7 +173,12 @@ export default async function ProductsPage({
                 {/* Product Grid */}
                 <section className="flex-1">
                     {sortedProducts.length > 0 ? (
-                        <ProductGrid products={sortedProducts} lang={lang} columns={3} />
+                        <ProductGrid
+                            products={sortedProducts}
+                            lang={lang}
+                            columns={3}
+                            addToCartLabel={dict.common.addToCart}
+                        />
                     ) : (
                         <div className="flex flex-col items-center justify-center py-20 text-center">
                             <p className="text-muted-foreground text-lg">

@@ -70,7 +70,12 @@ export default async function HomePage({ params }: HomePageProps) {
                     </p>
                 </div>
 
-                <ProductGrid products={featuredProducts} lang={lang} columns={4} />
+                <ProductGrid
+                    products={featuredProducts}
+                    lang={lang}
+                    columns={4}
+                    addToCartLabel={dict.common.addToCart}
+                />
 
                 {/* View All Button */}
                 <div className="mt-12 flex justify-center">

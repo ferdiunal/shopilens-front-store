@@ -10,6 +10,8 @@ import Link from "next/link";
 import { ShoppingCart, Heart } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useAppDispatch } from "@/lib/store/hooks";
+import { addItem } from "@/lib/store/slices/cart.slice";
 import { cn, formatPrice } from "@/lib/utils";
 import type { Product } from "@/types";
 
@@ -18,6 +20,7 @@ interface ProductCardProps {
     lang: string;
     className?: string;
     showQuickAdd?: boolean;
+    addToCartLabel?: string;
 }
 
 export function ProductCard({
@@ -25,12 +28,25 @@ export function ProductCard({
     lang,
     className,
     showQuickAdd = true,
+    addToCartLabel = "Add to Cart",
 }: ProductCardProps) {
+    const dispatch = useAppDispatch();
+
     // Badge belirleme
     const getBadge = () => {
         if (product.id <= 3) return { variant: "new" as const, label: "New" };
         if (product.price < 50) return { variant: "sale" as const, label: "Sale" };
         return null;
+    };
+
+    const handleAddToCart = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        dispatch(addItem({
+            product,
+            quantity: 1
+        }));
     };
 
     const badge = getBadge();
@@ -69,13 +85,10 @@ export function ProductCard({
                         <Button
                             variant="secondary"
                             className="w-full bg-background shadow-lg"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                // TODO: Add to cart logic
-                            }}
+                            onClick={handleAddToCart}
                         >
                             <ShoppingCart className="size-4" />
-                            Quick Add
+                            {addToCartLabel}
                         </Button>
                     </div>
                 )}
