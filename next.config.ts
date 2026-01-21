@@ -3,6 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // React Strict Mode
   reactStrictMode: true,
+  output: "standalone",
   experimental: {
     globalNotFound: true,
   },
