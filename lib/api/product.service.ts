@@ -56,7 +56,10 @@ export class ProductService {
         if (queryString) url += `?${queryString}`;
 
         const response = await fetch(url, {
-            next: { revalidate: CACHE.PRODUCTS },
+            next: {
+                revalidate: CACHE.PRODUCTS,
+                tags: ["products"]
+            },
         });
 
         if (!response.ok) {
@@ -73,7 +76,10 @@ export class ProductService {
     static async getById(id: number): Promise<Product | null> {
         try {
             const response = await fetch(`${API_BASE}/products/${id}`, {
-                next: { revalidate: CACHE.DETAIL },
+                next: {
+                    revalidate: CACHE.DETAIL,
+                    tags: ["products", `product-${id}`]
+                },
             });
 
             if (!response.ok) {
@@ -105,7 +111,10 @@ export class ProductService {
         if (queryString) url += `?${queryString}`;
 
         const response = await fetch(url, {
-            next: { revalidate: CACHE.PRODUCTS },
+            next: {
+                revalidate: CACHE.PRODUCTS,
+                tags: ["products", `category-${category}`]
+            },
         });
 
         if (!response.ok) {
@@ -121,7 +130,10 @@ export class ProductService {
      */
     static async getCategories(): Promise<Category[]> {
         const response = await fetch(`${API_BASE}/products/categories`, {
-            next: { revalidate: CACHE.STATIC },
+            next: {
+                revalidate: CACHE.STATIC,
+                tags: ["categories"]
+            },
         });
 
         if (!response.ok) {

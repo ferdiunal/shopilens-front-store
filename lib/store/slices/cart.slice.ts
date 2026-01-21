@@ -74,6 +74,13 @@ export const cartSlice = createSlice({
         },
 
         /**
+         * Sepeti API'den gelen veriyle set et
+         */
+        setCart: (state, action: PayloadAction<CartItem[]>) => {
+            state.items = action.payload;
+        },
+
+        /**
          * Sepet sidebar'ı aç/kapat
          */
         toggleCart: (state) => {
@@ -102,6 +109,7 @@ export const {
     removeItem,
     updateQuantity,
     clearCart,
+    setCart,
     toggleCart,
     openCart,
     closeCart,

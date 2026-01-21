@@ -43,30 +43,30 @@ export function CartSummary({ onCheckout, isLoading = false }: CartSummaryProps)
     const isCartEmpty = items.length === 0;
 
     return (
-        <div className="bg-gray-50 border rounded-lg p-6 sticky top-4">
-            <h2 className="text-xl font-semibold mb-4">{t("orderSummary")}</h2>
+        <div className="bg-card border border-border rounded-lg p-6 sticky top-4">
+            <h2 className="text-xl font-semibold text-foreground mb-4">{t("orderSummary")}</h2>
 
             <div className="space-y-3 mb-6">
                 {/* Ürün sayısı */}
-                <div className="flex justify-between text-sm text-gray-600">
+                <div className="flex justify-between text-sm text-muted-foreground">
                     <span>{t("items")}</span>
                     <span>{itemCount}</span>
                 </div>
 
                 {/* Ara toplam */}
-                <div className="flex justify-between">
+                <div className="flex justify-between text-foreground">
                     <span>{t("subtotal")}</span>
                     <span>{tCommon("currency")}{total.toFixed(2)}</span>
                 </div>
 
                 {/* Kargo - Örnek */}
-                <div className="flex justify-between text-sm text-gray-600">
+                <div className="flex justify-between text-sm text-muted-foreground">
                     <span>{t("shipping")}</span>
-                    <span className="text-green-600">{t("freeShipping")}</span>
+                    <span className="text-green-500">{t("freeShipping")}</span>
                 </div>
 
                 {/* Toplam */}
-                <div className="flex justify-between font-bold text-lg border-t pt-3">
+                <div className="flex justify-between font-bold text-lg text-foreground border-t border-border pt-3">
                     <span>{t("total")}</span>
                     <span>{tCommon("currency")}{total.toFixed(2)}</span>
                 </div>
@@ -98,7 +98,7 @@ export function CartSummary({ onCheckout, isLoading = false }: CartSummaryProps)
             </Button>
 
             {/* Güvenlik bilgisi */}
-            <p className="text-xs text-gray-500 text-center mt-4">
+            <p className="text-xs text-muted-foreground text-center mt-4">
                 {t("secureCheckout")}
             </p>
         </div>

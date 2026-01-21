@@ -13,10 +13,5 @@ export default function Error({ error, reset }: ErrorProps) {
     const params = useParams();
     const lang = (params?.lang as string) || "tr";
 
-    useEffect(() => {
-        // Log the error to an error reporting service
-        console.error("Error:", error);
-    }, [error]);
-
     return <ErrorPage type="500" lang={lang} />;
 }

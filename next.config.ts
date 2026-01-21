@@ -3,6 +3,9 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // React Strict Mode
   reactStrictMode: true,
+  experimental: {
+    globalNotFound: true,
+  },
 
   // Image Optimization configuration
   images: {

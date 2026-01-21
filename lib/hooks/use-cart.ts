@@ -40,31 +40,42 @@ export function useCart() {
     // User ID'yi session'dan al (base64 decode veya default 1)
     const getUserId = useCallback((): number => {
         if (session?.user?.id) {
-            try {
-                const decoded = atob(session.user.id);
-                const parsed = parseInt(decoded);
-                return isNaN(parsed) ? 1 : parsed;
-            } catch {
-                return 1;
+            const getSessionId = localStorage.getItem("userId." + session.user.id);
+            if (getSessionId) {
+                return parseInt(getSessionId);
             }
+            const id = Math.floor(Math.random() * 7);
+            localStorage.setItem("userId." + session.user.id, id.toString());
+            return id;
         }
         return 1; // Demo için default user
     }, [session?.user?.id]);
 
     /**
      * FakeStoreAPI'ye sepet gönder
+     * API Format: { userId, products: [{ id, title, price, description, category, image }] }
      */
-    const syncToAPI = useCallback(async (products: Array<{ productId: number; quantity: number }>) => {
+    const syncToAPI = useCallback(async (products: Product[]) => {
         const userId = getUserId();
+
+        // FakeStoreAPI formatına dönüştür
+        const apiProducts = products.map((product) => ({
+            id: product.id,
+            title: product.title,
+            price: product.price,
+            description: product.description,
+            category: product.category,
+            image: product.image,
+        }));
 
         try {
             const response = await fetch(`${API_BASE}/carts`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
+                    id: Math.floor(Math.random() * 7),
                     userId,
-                    date: new Date().toISOString().split("T")[0],
-                    products,
+                    products: apiProducts,
                 }),
             });
 
@@ -92,8 +103,8 @@ export function useCart() {
             // 1. Local Redux state'i güncelle
             dispatch(addItem({ product, quantity }));
 
-            // 2. FakeStoreAPI'ye gönder
-            await syncToAPI([{ productId: product.id, quantity }]);
+            // 2. FakeStoreAPI'ye gönder (product objesini gönder)
+            await syncToAPI([product]);
 
             return true;
         } catch (err) {
@@ -139,8 +150,10 @@ export function useCart() {
             dispatch(updateQuantity({ productId, quantity }));
 
             // FakeStoreAPI'ye güncelleme gönder
-            if (quantity > 0) {
-                await syncToAPI([{ productId, quantity }]);
+            // Not: updateItemQuantity için product bilgisi gerekli, mevcut cart items'tan alınabilir
+            const cartItem = items.find((item) => item.product.id === productId);
+            if (quantity > 0 && cartItem) {
+                await syncToAPI([cartItem.product]);
             }
 
             return true;

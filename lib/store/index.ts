@@ -5,6 +5,7 @@
 
 import { configureStore } from "@reduxjs/toolkit";
 import cartReducer from "./slices/cart.slice";
+import productsReducer from "./slices/products.slice";
 
 /**
  * Store factory fonksiyonu
@@ -14,6 +15,7 @@ export const makeStore = () => {
     return configureStore({
         reducer: {
             cart: cartReducer,
+            products: productsReducer,
         },
         devTools: process.env.NODE_ENV !== "production",
     });

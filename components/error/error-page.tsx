@@ -132,10 +132,10 @@ export function ErrorPage({ type, lang = "tr" }: ErrorPageProps) {
                                         variant="secondary"
                                         asChild
                                     >
-                                        <Link href={`/${lang}`} className="gap-2">
+                                        <a href={`/${lang}`} className="gap-2">
                                             <ArrowLeft className="h-4 w-4" />
                                             {t("returnHome")}
-                                        </Link>
+                                        </a>
                                     </Button>
                                 </div>
                             ) : type === "404" ? (
@@ -143,10 +143,10 @@ export function ErrorPage({ type, lang = "tr" }: ErrorPageProps) {
                                     asChild
                                     className="w-full gap-2 py-6 shadow-lg shadow-primary/20"
                                 >
-                                    <Link href={`/${lang}`}>
+                                    <a href={`/${lang}`}>
                                         {t("returnHome")}
                                         <ArrowRight className="h-4 w-4" />
-                                    </Link>
+                                    </a>
                                 </Button>
                             ) : (
                                 <>
@@ -157,13 +157,13 @@ export function ErrorPage({ type, lang = "tr" }: ErrorPageProps) {
                                         <ArrowLeft className="h-4 w-4" />
                                         {t("goBack")}
                                     </Button>
-                                    <Link
+                                    <a
                                         href="#"
                                         className="group flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mt-2 text-sm font-medium"
                                     >
                                         <span>{t("contactSupport")}</span>
                                         <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                                    </Link>
+                                    </a>
                                 </>
                             )}
                         </div>
@@ -171,15 +171,15 @@ export function ErrorPage({ type, lang = "tr" }: ErrorPageProps) {
                         {/* Helpful Links for 404 */}
                         {type === "404" && (
                             <div className="pt-6 flex flex-wrap justify-center gap-6 text-sm font-medium text-muted-foreground">
-                                <Link href={`/${lang}/products`} className="hover:text-primary transition-colors">
+                                <a href={`/${lang}/products`} className="hover:text-primary transition-colors">
                                     {t("newArrivals")}
-                                </Link>
-                                <Link href={`/${lang}/products`} className="hover:text-primary transition-colors">
+                                </a>
+                                <a href={`/${lang}/products`} className="hover:text-primary transition-colors">
                                     {t("bestSellers")}
-                                </Link>
-                                <Link href="#" className="hover:text-primary transition-colors">
+                                </a>
+                                <a href="#" className="hover:text-primary transition-colors">
                                     {t("helpCenter")}
-                                </Link>
+                                </a>
                             </div>
                         )}
                     </div>
