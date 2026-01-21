@@ -34,7 +34,7 @@ export function Footer({ lang, dict }: FooterProps) {
                                 />
                             </svg>
                         </div>
-                        <span className="font-bold text-lg">ShopILens</span>
+                        <span className="font-bold text-lg">ShopiLens</span>
                     </div>
 
                     {/* Links */}
@@ -87,7 +87,7 @@ export function Footer({ lang, dict }: FooterProps) {
                 {/* Copyright */}
                 <div className="mt-8 pt-6 border-t border-border text-center">
                     <p className="text-sm text-muted-foreground">
-                        © {new Date().getFullYear()} ShopILens. {dict.common.allRightsReserved}
+                        © {new Date().getFullYear()} ShopiLens. {dict.common.allRightsReserved}
                     </p>
                 </div>
             </div>

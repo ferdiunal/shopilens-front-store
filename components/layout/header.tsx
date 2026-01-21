@@ -47,7 +47,7 @@ export function Header({ lang, dict, cartItemCount = 0 }: HeaderProps) {
                                 </svg>
                             </div>
                             <span className="text-lg font-bold tracking-tight">
-                                ShopILens
+                                ShopiLens
                             </span>
                         </Link>
                     </div>

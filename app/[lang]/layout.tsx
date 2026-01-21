@@ -54,7 +54,7 @@ export async function generateMetadata({
         metadataBase: new URL(baseUrl),
         title: {
             default: dict.meta.homeTitle,
-            template: `%s | ShopILens`,
+            template: `%s | ShopiLens`,
         },
         description: dict.meta.homeDescription,
         keywords: [
@@ -64,13 +64,13 @@ export async function generateMetadata({
             "jewelry",
             "clothing",
         ],
-        authors: [{ name: "ShopILens Team" }],
-        creator: "ShopILens",
+        authors: [{ name: "ShopiLens Team" }],
+        creator: "ShopiLens",
         openGraph: {
             type: "website",
             locale: lang === "tr" ? "tr_TR" : "en_US",
             url: baseUrl,
-            siteName: "ShopILens",
+            siteName: "ShopiLens",
             title: dict.meta.homeTitle,
             description: dict.meta.homeDescription,
         },

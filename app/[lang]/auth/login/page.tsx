@@ -25,7 +25,7 @@ export default function LoginPage() {
                         Hoş Geldiniz
                     </h2>
                     <p className="mt-2 text-center text-sm text-muted-foreground">
-                        ShopILens hesabınıza giriş yapın
+                        ShopiLens hesabınıza giriş yapın
                     </p>
                 </div>
 

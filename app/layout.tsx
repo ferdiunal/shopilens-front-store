@@ -5,7 +5,7 @@ import { OrganizationJsonLd, WebSiteJsonLd } from "@/components/seo/JsonLd";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "ShopILens",
+  title: "ShopiLens",
   description: "E-commerce Application",
 };
 
