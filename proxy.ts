@@ -14,7 +14,7 @@ const protectedRoutes = ["/checkout", "/account", "/orders"];
 // Auth rotaları (giriş yapmış kullanıcı erişemez)
 const authRoutes = ["/auth/login", "/auth/register"];
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
     // Static files ve API routes'u atla
