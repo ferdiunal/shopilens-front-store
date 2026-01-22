@@ -13,7 +13,7 @@ import type {
 } from "@/types";
 import path from "path";
 import getAllProducts from "./products.json"
-import { promises as fs } from "fs";
+
 
 /**
  * Cache stratejileri - Mock veride de tutarlılık için kullanılabilir

@@ -28,7 +28,11 @@ export const fetchProducts = createAsyncThunk(
     "products/fetchProducts",
     async (_, { rejectWithValue }) => {
         try {
-            const response = await fetch(`${API_BASE}/products`);
+            // Local API'den çek
+            // const response = await fetch(`${API_BASE}/products`);
+            // Production build sırasında tam URL gerekebilir, ancak client-side fetch için relative path yeterli olmalı.
+            // Eğer SSR/SSG sırasında çalışıyorsa, absolute URL gerekebilir.
+            const response = await fetch("/api/products");
 
             if (!response.ok) {
                 throw new Error(`API Error: ${response.status}`);

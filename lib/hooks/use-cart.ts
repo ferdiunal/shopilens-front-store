@@ -18,7 +18,7 @@ import {
 import type { Product } from "@/types";
 import { CartService } from "@/lib/api/cart.service";
 
-const API_BASE = "https://fakestoreapi.com";
+
 
 /**
  * useCart Hook

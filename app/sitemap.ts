@@ -53,6 +53,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         }
     } catch (error) {
         console.warn("Sitemap generation warning: Failed to fetch products", error);
+        if (error instanceof Error) {
+            console.error(error.stack);
+        }
     }
 
     // Kategori sayfaları

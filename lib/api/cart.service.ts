@@ -12,91 +12,77 @@ import type {
     CartFilterParams
 } from "@/types";
 
-const API_BASE = "https://fakestoreapi.com";
+import getAllCarts from "./carts.json";
 
-/**
- * CartService
- * Sepet API servisi - SSR/SSG destekli
- */
+
+
 export class CartService {
     // ============================================
     // READ OPERATIONS (GET)
     // ============================================
 
-    /**
-     * Tüm sepetleri getirir
-     * SSR: Her istekte güncel veri
-     */
     static async getAll(filters?: CartFilterParams): Promise<Cart[]> {
-        let url = `${API_BASE}/carts`;
-        const params = new URLSearchParams();
+        let filtered = [...getAllCarts];
 
-        if (filters?.startdate) params.append("startdate", filters.startdate);
-        if (filters?.enddate) params.append("enddate", filters.enddate);
-        if (filters?.sort) params.append("sort", filters.sort);
-        if (filters?.limit) params.append("limit", String(filters.limit));
-
-        const queryString = params.toString();
-        if (queryString) url += `?${queryString}`;
-
-        const response = await fetch(url, {
-            cache: "no-store", // SSR: Her istekte güncel
-        });
-
-        if (!response.ok) {
-            throw new Error(`Failed to fetch carts: ${response.status}`);
+        // Tarih filtresi
+        if (filters?.startdate) {
+            filtered = filtered.filter(c => new Date(c.date) >= new Date(filters.startdate!));
+        }
+        if (filters?.enddate) {
+            filtered = filtered.filter(c => new Date(c.date) <= new Date(filters.enddate!));
         }
 
-        return response.json();
-    }
-
-    /**
-     * Tek sepet detayı
-     */
-    static async getById(id: number): Promise<Cart | null> {
-        try {
-            const response = await fetch(`${API_BASE}/carts/${id}`, {
-                cache: "no-store",
+        // Sıralama
+        if (filters?.sort) {
+            filtered.sort((a, b) => {
+                const dateA = new Date(a.date).getTime();
+                const dateB = new Date(b.date).getTime();
+                return filters.sort === "asc" ? dateA - dateB : dateB - dateA;
             });
-
-            if (!response.ok) {
-                return null;
-            }
-
-            return response.json();
-        } catch {
-            return null;
         }
+
+        // Limit
+        if (filters?.limit) {
+            filtered = filtered.slice(0, filters.limit);
+        }
+
+        return filtered as Cart[];
     }
 
-    /**
-     * Kullanıcının sepetlerini getir
-     * SSR: Authenticated request için
-     */
+    static async getById(id: number): Promise<Cart | null> {
+        const cart = getAllCarts.find(c => c.id === Number(id));
+        return (cart as Cart) || null;
+    }
+
     static async getByUserId(
         userId: number,
         filters?: CartFilterParams
     ): Promise<Cart[]> {
-        let url = `${API_BASE}/carts/user/${userId}`;
-        const params = new URLSearchParams();
+        let filtered = getAllCarts.filter(c => c.userId === Number(userId));
 
-        if (filters?.startdate) params.append("startdate", filters.startdate);
-        if (filters?.enddate) params.append("enddate", filters.enddate);
-        if (filters?.sort) params.append("sort", filters.sort);
-        if (filters?.limit) params.append("limit", String(filters.limit));
-
-        const queryString = params.toString();
-        if (queryString) url += `?${queryString}`;
-
-        const response = await fetch(url, {
-            cache: "no-store",
-        });
-
-        if (!response.ok) {
-            throw new Error(`Failed to fetch user carts: ${response.status}`);
+        // Tarih filtresi
+        if (filters?.startdate) {
+            filtered = filtered.filter(c => new Date(c.date) >= new Date(filters.startdate!));
+        }
+        if (filters?.enddate) {
+            filtered = filtered.filter(c => new Date(c.date) <= new Date(filters.enddate!));
         }
 
-        return response.json();
+        // Sıralama
+        if (filters?.sort) {
+            filtered.sort((a, b) => {
+                const dateA = new Date(a.date).getTime();
+                const dateB = new Date(b.date).getTime();
+                return filters.sort === "asc" ? dateA - dateB : dateB - dateA;
+            });
+        }
+
+        // Limit
+        if (filters?.limit) {
+            filtered = filtered.slice(0, filters.limit);
+        }
+
+        return filtered as Cart[];
     }
 
     /**
@@ -117,69 +103,49 @@ export class CartService {
      * Yeni sepet oluştur
      */
     static async create(cart: CreateCartInput): Promise<Cart> {
-        const response = await fetch(`${API_BASE}/carts`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(cart),
-            cache: "no-store",
-        });
-
-        if (!response.ok) {
-            throw new Error(`Failed to create cart: ${response.status}`);
-        }
-
-        return response.json();
+        // Mock success response
+        return {
+            ...cart,
+            id: Math.floor(Math.random() * 1000) + 100
+        } as unknown as Cart;
     }
 
     /**
      * Sepet güncelle
      */
     static async update(id: number, cart: UpdateCartInput): Promise<Cart> {
-        const response = await fetch(`${API_BASE}/carts/${id}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(cart),
-            cache: "no-store",
-        });
-
-        if (!response.ok) {
-            throw new Error(`Failed to update cart: ${response.status}`);
-        }
-
-        return response.json();
+        // Mock success response
+        return {
+            id,
+            userId: cart.userId || 1,
+            date: cart.date || new Date().toISOString(),
+            products: cart.products || []
+        } as Cart;
     }
 
     /**
      * Sepeti kısmen güncelle (PATCH)
      */
     static async patch(id: number, cart: UpdateCartInput): Promise<Cart> {
-        const response = await fetch(`${API_BASE}/carts/${id}`, {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(cart),
-            cache: "no-store",
-        });
-
-        if (!response.ok) {
-            throw new Error(`Failed to patch cart: ${response.status}`);
-        }
-
-        return response.json();
+        // Mock success response
+        return {
+            id,
+            userId: cart.userId || 1,
+            date: cart.date || new Date().toISOString(),
+            products: cart.products || []
+        } as Cart;
     }
 
     /**
      * Sepet sil
      */
     static async delete(id: number): Promise<Cart> {
-        const response = await fetch(`${API_BASE}/carts/${id}`, {
-            method: "DELETE",
-            cache: "no-store",
-        });
-
-        if (!response.ok) {
-            throw new Error(`Failed to delete cart: ${response.status}`);
-        }
-
-        return response.json();
+        // Mock success response
+        return {
+            id,
+            userId: 1,
+            date: new Date().toISOString(),
+            products: []
+        } as Cart;
     }
 }
